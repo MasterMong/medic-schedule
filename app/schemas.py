@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime, date
@@ -135,17 +134,36 @@ class Medication(MedicationBase):
     class Config:
         orm_mode = True
 
+class PresetMedicationBase(BaseModel):
+    med_id: int
+    dosage: Optional[str] = None
+    frequency: Optional[str] = None
+    duration: Optional[str] = None
+    special_instruction: Optional[str] = None
+
+class PresetMedicationCreate(PresetMedicationBase):
+    pass
+
+class PresetMedication(PresetMedicationBase):
+    preset_med_id: int
+    preset_id: int
+
+    class Config:
+        orm_mode = True
+
 class MedicationPresetBase(BaseModel):
     name: str
     description: Optional[str] = None
     condition_text: Optional[str] = None
+    common_instruction: Optional[str] = None
     is_active: bool = True
 
 class MedicationPresetCreate(MedicationPresetBase):
-    pass
+    medications: List[PresetMedicationCreate]
 
 class MedicationPreset(MedicationPresetBase):
     preset_id: int
+    medications: List[PresetMedication]
 
     class Config:
         orm_mode = True

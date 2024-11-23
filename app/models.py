@@ -107,7 +107,23 @@ class MedicationPreset(Base):
     name = Column(String(100), nullable=False)
     description = Column(Text)
     condition_text = Column(Text)
+    common_instruction = Column(Text)
     is_active = Column(Boolean, default=True)
+    
+    medications = relationship("PresetMedication", back_populates="preset")
+
+class PresetMedication(Base):
+    __tablename__ = "preset_medications"
+    preset_med_id = Column(Integer, primary_key=True, index=True)
+    preset_id = Column(Integer, ForeignKey("medication_presets.preset_id"))
+    med_id = Column(Integer, ForeignKey("medications.med_id"))
+    dosage = Column(String(50))
+    frequency = Column(String(50))
+    duration = Column(String(50))
+    special_instruction = Column(Text)
+    
+    preset = relationship("MedicationPreset", back_populates="medications")
+    medication = relationship("Medication")
 
 class MedicationSchedule(Base):
     __tablename__ = "medication_schedules"

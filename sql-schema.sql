@@ -94,7 +94,21 @@ CREATE TABLE medication_presets (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     condition_text TEXT,
+    common_instruction TEXT,
     is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Add new junction table for preset medications
+CREATE TABLE preset_medications (
+    preset_med_id INT PRIMARY KEY AUTO_INCREMENT,
+    preset_id INT,
+    med_id INT,
+    dosage VARCHAR(50),
+    frequency VARCHAR(50),
+    duration VARCHAR(50),
+    special_instruction TEXT,
+    FOREIGN KEY (preset_id) REFERENCES medication_presets(preset_id),
+    FOREIGN KEY (med_id) REFERENCES medications(med_id)
 );
 
 -- สร้างตารางตารางการให้ยา

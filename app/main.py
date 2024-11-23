@@ -3,10 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import (
     buildings, floors, wards, rooms, beds,
     nurses, patients, medications,
-    medication_presets, medication_schedules, medication_history, admin
+    medication_presets, medication_schedules, medication_history, 
+    preset_medications, admin  # Add preset_medications here
 )
-from .database import engine
+from .database import engine, SessionLocal
 from . import models
+from .seeders.seeder import seed_data
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -32,7 +34,21 @@ app.include_router(medication_presets.router, prefix="/api/medication-presets", 
 app.include_router(medication_schedules.router, prefix="/api/medication-schedules", tags=["medication-schedules"])
 app.include_router(medication_history.router, prefix="/api/medication-history", tags=["medication-history"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
+app.include_router(
+    preset_medications.router, 
+    prefix="/api/preset-medications", 
+    tags=["preset-medications"]
+)
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to Hospital Medication Tracking System API"}
+
+@app.post("/seed-data")
+def seed_database():
+    db = SessionLocal()
+    try:
+        seed_data(db)
+        return {"message": "Database seeded successfully"}
+    finally:
+        db.close()
