@@ -1,0 +1,92 @@
+สร้างระบบติดตามการให้ยาผู้ป่วยในโรงพยาบาล โดยมีความต้องการดังนี้:
+
+1. โครงสร้างข้อมูล:
+- ผู้ป่วย: HN, ชื่อ, เตียง(อาคาร/ชั้น/ห้อง), วอร์ด, การแพ้ยา
+- ยา: ชื่อยา, ประเภท, วิธีให้, ขนาด, คำแนะนำพิเศษ
+- ตารางการให้ยา: ผู้ป่วย, ยา, เวลา, พยาบาลผู้รับผิดชอบ
+
+2. ฟังก์ชันหลัก:
+- ติดตามสถานะการให้ยาผู้ป่วย
+- แจ้งเตือนเมื่อใกล้ถึงเวลาให้ยา 
+- บันทึกประวัติการให้ยา
+- Preset สำหรับการให้ยาตามอาการ
+
+3. ระบบความปลอดภัย:
+- บันทึกผู้รับผิดชอบทุกขั้นตอน
+- แจ้งเตือนการแพ้ยา
+- ติดตามความคลาดเคลื่อนทางยา
+
+4. รายงาน:
+- ตารางการให้ยารายวัน
+- ประวัติการให้ยาผู้ป่วย
+- สถิติการให้ยาตรงเวลา
+- รายงานความคลาดเคลื่อน
+
+
+
+Create a Hospital Medication Tracking System with the following requirements:
+
+1. Core Features:
+- Track patient medication status
+- Alert nurses for medication schedules
+- Record medication administration history
+- Manage preset medication orders
+- Monitor 7 Rights compliance
+
+2. Data Structure:
+Patient:
+- HN, name, bed(building/floor/room), ward, allergies
+- Current medications and schedules
+- Treatment history
+
+Medication:
+- Name, type, route, dosage, instructions
+- Special requirements
+- Interaction warnings
+
+Schedule:
+- Patient and medication info
+- Timing and frequency
+- Responsible nurse
+- Administration status
+
+3. User Roles:
+Doctor:
+- Prescribe medications
+- Monitor treatment
+- Review patient history
+
+Nurse:
+- Receive medication alerts
+- Verify and administer medications
+- Record administration
+- Monitor patient response
+
+Pharmacist:
+- Review prescriptions
+- Check drug interactions
+- Prepare medications
+
+Ward Head:
+- Monitor overall compliance
+- Review reports
+- Manage staff schedules
+
+4. Safety Features:
+- Drug interaction checks
+- Allergy alerts
+- Error tracking
+- Activity logging
+
+5. Reports:
+- Daily medication schedules
+- Administration history
+- Compliance statistics
+- Error reports
+
+Technical Requirements:
+- Real-time alerts
+- Mobile-friendly interface
+- Secure authentication
+- Data encryption
+- Audit logging

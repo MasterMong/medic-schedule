@@ -1,0 +1,3776 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Hospital Medication Tracking System",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/api/buildings/": {
+            "get": {
+                "tags": [
+                    "buildings"
+                ],
+                "summary": "Get Buildings",
+                "operationId": "get_buildings_api_buildings__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Building"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Buildings Api Buildings  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "buildings"
+                ],
+                "summary": "Create Building",
+                "operationId": "create_building_api_buildings__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BuildingCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Building"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/buildings/{building_id}": {
+            "get": {
+                "tags": [
+                    "buildings"
+                ],
+                "summary": "Get Building",
+                "operationId": "get_building_api_buildings__building_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Building Id"
+                        },
+                        "name": "building_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Building"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "buildings"
+                ],
+                "summary": "Update Building",
+                "operationId": "update_building_api_buildings__building_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Building Id"
+                        },
+                        "name": "building_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BuildingCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Building"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "buildings"
+                ],
+                "summary": "Delete Building",
+                "operationId": "delete_building_api_buildings__building_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Building Id"
+                        },
+                        "name": "building_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Building"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/floors/": {
+            "get": {
+                "tags": [
+                    "floors"
+                ],
+                "summary": "Get Floors",
+                "operationId": "get_floors_api_floors__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Floor"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Floors Api Floors  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "floors"
+                ],
+                "summary": "Create Floor",
+                "operationId": "create_floor_api_floors__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FloorCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Floor"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/floors/{floor_id}": {
+            "get": {
+                "tags": [
+                    "floors"
+                ],
+                "summary": "Get Floor",
+                "operationId": "get_floor_api_floors__floor_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Floor Id"
+                        },
+                        "name": "floor_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Floor"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "floors"
+                ],
+                "summary": "Update Floor",
+                "operationId": "update_floor_api_floors__floor_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Floor Id"
+                        },
+                        "name": "floor_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FloorCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Floor"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "floors"
+                ],
+                "summary": "Delete Floor",
+                "operationId": "delete_floor_api_floors__floor_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Floor Id"
+                        },
+                        "name": "floor_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Floor"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wards/": {
+            "get": {
+                "tags": [
+                    "wards"
+                ],
+                "summary": "Get Wards",
+                "operationId": "get_wards_api_wards__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Ward"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Wards Api Wards  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "wards"
+                ],
+                "summary": "Create Ward",
+                "operationId": "create_ward_api_wards__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WardCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ward"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wards/{ward_id}": {
+            "get": {
+                "tags": [
+                    "wards"
+                ],
+                "summary": "Get Ward",
+                "operationId": "get_ward_api_wards__ward_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Ward Id"
+                        },
+                        "name": "ward_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ward"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "wards"
+                ],
+                "summary": "Update Ward",
+                "operationId": "update_ward_api_wards__ward_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Ward Id"
+                        },
+                        "name": "ward_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WardCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ward"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "wards"
+                ],
+                "summary": "Delete Ward",
+                "operationId": "delete_ward_api_wards__ward_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Ward Id"
+                        },
+                        "name": "ward_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ward"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/rooms/": {
+            "get": {
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Get Rooms",
+                "operationId": "get_rooms_api_rooms__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Room"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Rooms Api Rooms  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Create Room",
+                "operationId": "create_room_api_rooms__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoomCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/rooms/{room_id}": {
+            "get": {
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Get Room",
+                "operationId": "get_room_api_rooms__room_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Room Id"
+                        },
+                        "name": "room_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Update Room",
+                "operationId": "update_room_api_rooms__room_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Room Id"
+                        },
+                        "name": "room_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoomCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Delete Room",
+                "operationId": "delete_room_api_rooms__room_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Room Id"
+                        },
+                        "name": "room_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/beds/": {
+            "get": {
+                "tags": [
+                    "beds"
+                ],
+                "summary": "Get Beds",
+                "operationId": "get_beds_api_beds__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Bed"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Beds Api Beds  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "beds"
+                ],
+                "summary": "Create Bed",
+                "operationId": "create_bed_api_beds__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BedCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bed"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/beds/{bed_id}": {
+            "get": {
+                "tags": [
+                    "beds"
+                ],
+                "summary": "Get Bed",
+                "operationId": "get_bed_api_beds__bed_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Bed Id"
+                        },
+                        "name": "bed_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bed"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "beds"
+                ],
+                "summary": "Update Bed",
+                "operationId": "update_bed_api_beds__bed_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Bed Id"
+                        },
+                        "name": "bed_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BedCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bed"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "beds"
+                ],
+                "summary": "Delete Bed",
+                "operationId": "delete_bed_api_beds__bed_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Bed Id"
+                        },
+                        "name": "bed_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bed"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/nurses/": {
+            "get": {
+                "tags": [
+                    "nurses"
+                ],
+                "summary": "Get Nurses",
+                "operationId": "get_nurses_api_nurses__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Nurse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Nurses Api Nurses  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "nurses"
+                ],
+                "summary": "Create Nurse",
+                "operationId": "create_nurse_api_nurses__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NurseCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nurse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/nurses/{nurse_id}": {
+            "get": {
+                "tags": [
+                    "nurses"
+                ],
+                "summary": "Get Nurse",
+                "operationId": "get_nurse_api_nurses__nurse_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Nurse Id"
+                        },
+                        "name": "nurse_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nurse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "nurses"
+                ],
+                "summary": "Update Nurse",
+                "operationId": "update_nurse_api_nurses__nurse_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Nurse Id"
+                        },
+                        "name": "nurse_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NurseCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nurse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "nurses"
+                ],
+                "summary": "Delete Nurse",
+                "operationId": "delete_nurse_api_nurses__nurse_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Nurse Id"
+                        },
+                        "name": "nurse_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nurse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patients/": {
+            "get": {
+                "tags": [
+                    "patients"
+                ],
+                "summary": "Get Patients",
+                "operationId": "get_patients_api_patients__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Patient"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Patients Api Patients  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "patients"
+                ],
+                "summary": "Create Patient",
+                "operationId": "create_patient_api_patients__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatientCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patients/{patient_id}": {
+            "get": {
+                "tags": [
+                    "patients"
+                ],
+                "summary": "Get Patient",
+                "operationId": "get_patient_api_patients__patient_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Patient Id"
+                        },
+                        "name": "patient_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "patients"
+                ],
+                "summary": "Update Patient",
+                "operationId": "update_patient_api_patients__patient_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Patient Id"
+                        },
+                        "name": "patient_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatientCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "patients"
+                ],
+                "summary": "Delete Patient",
+                "operationId": "delete_patient_api_patients__patient_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Patient Id"
+                        },
+                        "name": "patient_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medications/": {
+            "get": {
+                "tags": [
+                    "medications"
+                ],
+                "summary": "Get Medications",
+                "operationId": "get_medications_api_medications__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Medication"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Medications Api Medications  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "medications"
+                ],
+                "summary": "Create Medication",
+                "operationId": "create_medication_api_medications__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Medication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medications/{medication_id}": {
+            "get": {
+                "tags": [
+                    "medications"
+                ],
+                "summary": "Get Medication",
+                "operationId": "get_medication_api_medications__medication_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Medication Id"
+                        },
+                        "name": "medication_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Medication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "medications"
+                ],
+                "summary": "Update Medication",
+                "operationId": "update_medication_api_medications__medication_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Medication Id"
+                        },
+                        "name": "medication_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Medication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "medications"
+                ],
+                "summary": "Delete Medication",
+                "operationId": "delete_medication_api_medications__medication_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Medication Id"
+                        },
+                        "name": "medication_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-presets/": {
+            "get": {
+                "tags": [
+                    "medication-presets"
+                ],
+                "summary": "Get Medication Presets",
+                "operationId": "get_medication_presets_api_medication_presets__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/MedicationPreset"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Medication Presets Api Medication Presets  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "medication-presets"
+                ],
+                "summary": "Create Medication Preset",
+                "operationId": "create_medication_preset_api_medication_presets__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationPresetCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationPreset"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-presets/{preset_id}": {
+            "get": {
+                "tags": [
+                    "medication-presets"
+                ],
+                "summary": "Get Medication Preset",
+                "operationId": "get_medication_preset_api_medication_presets__preset_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Id"
+                        },
+                        "name": "preset_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationPreset"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "medication-presets"
+                ],
+                "summary": "Update Medication Preset",
+                "operationId": "update_medication_preset_api_medication_presets__preset_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Id"
+                        },
+                        "name": "preset_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationPresetCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationPreset"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "medication-presets"
+                ],
+                "summary": "Delete Medication Preset",
+                "operationId": "delete_medication_preset_api_medication_presets__preset_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Id"
+                        },
+                        "name": "preset_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationPreset"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-schedules/": {
+            "get": {
+                "tags": [
+                    "medication-schedules"
+                ],
+                "summary": "Get Medication Schedules",
+                "operationId": "get_medication_schedules_api_medication_schedules__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/MedicationSchedule"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Medication Schedules Api Medication Schedules  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "medication-schedules"
+                ],
+                "summary": "Create Medication Schedule",
+                "operationId": "create_medication_schedule_api_medication_schedules__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationScheduleCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationSchedule"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-schedules/{schedule_id}": {
+            "get": {
+                "tags": [
+                    "medication-schedules"
+                ],
+                "summary": "Get Medication Schedule",
+                "operationId": "get_medication_schedule_api_medication_schedules__schedule_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Schedule Id"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationSchedule"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "medication-schedules"
+                ],
+                "summary": "Update Medication Schedule",
+                "operationId": "update_medication_schedule_api_medication_schedules__schedule_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Schedule Id"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationScheduleCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationSchedule"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "medication-schedules"
+                ],
+                "summary": "Delete Medication Schedule",
+                "operationId": "delete_medication_schedule_api_medication_schedules__schedule_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Schedule Id"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationSchedule"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-history/": {
+            "get": {
+                "tags": [
+                    "medication-history"
+                ],
+                "summary": "Get Medication Histories",
+                "operationId": "get_medication_histories_api_medication_history__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/MedicationHistory"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Medication Histories Api Medication History  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "medication-history"
+                ],
+                "summary": "Create Medication History",
+                "operationId": "create_medication_history_api_medication_history__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationHistoryCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationHistory"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/medication-history/{history_id}": {
+            "get": {
+                "tags": [
+                    "medication-history"
+                ],
+                "summary": "Get Medication History",
+                "operationId": "get_medication_history_api_medication_history__history_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "History Id"
+                        },
+                        "name": "history_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationHistory"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "medication-history"
+                ],
+                "summary": "Update Medication History",
+                "operationId": "update_medication_history_api_medication_history__history_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "History Id"
+                        },
+                        "name": "history_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedicationHistoryCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationHistory"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "medication-history"
+                ],
+                "summary": "Delete Medication History",
+                "operationId": "delete_medication_history_api_medication_history__history_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "History Id"
+                        },
+                        "name": "history_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedicationHistory"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/clear-database": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Clear Database",
+                "operationId": "clear_database_admin_clear_database_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Confirmation",
+                            "default": false
+                        },
+                        "name": "confirmation",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Clear Database Admin Clear Database Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/preset-medications/": {
+            "get": {
+                "tags": [
+                    "preset-medications"
+                ],
+                "summary": "Get Preset Medications",
+                "operationId": "get_preset_medications_api_preset_medications__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Skip",
+                            "default": 0
+                        },
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Limit",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Id"
+                        },
+                        "name": "preset_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/PresetMedication"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Preset Medications Api Preset Medications  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "preset-medications"
+                ],
+                "summary": "Create Preset Medication",
+                "operationId": "create_preset_medication_api_preset_medications__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PresetMedicationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PresetMedication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/preset-medications/{preset_med_id}": {
+            "get": {
+                "tags": [
+                    "preset-medications"
+                ],
+                "summary": "Get Preset Medication",
+                "operationId": "get_preset_medication_api_preset_medications__preset_med_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Med Id"
+                        },
+                        "name": "preset_med_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PresetMedication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "preset-medications"
+                ],
+                "summary": "Update Preset Medication",
+                "operationId": "update_preset_medication_api_preset_medications__preset_med_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Med Id"
+                        },
+                        "name": "preset_med_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PresetMedicationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PresetMedication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "preset-medications"
+                ],
+                "summary": "Delete Preset Medication",
+                "operationId": "delete_preset_medication_api_preset_medications__preset_med_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Preset Med Id"
+                        },
+                        "name": "preset_med_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PresetMedication"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "summary": "Read Root",
+                "operationId": "read_root__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/seed-data": {
+            "post": {
+                "summary": "Seed Database",
+                "operationId": "seed_database_seed_data_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Bed": {
+                "properties": {
+                    "room_id": {
+                        "type": "integer",
+                        "title": "Room Id"
+                    },
+                    "bed_number": {
+                        "type": "string",
+                        "title": "Bed Number"
+                    },
+                    "bed_type": {
+                        "type": "string",
+                        "title": "Bed Type"
+                    },
+                    "is_occupied": {
+                        "type": "boolean",
+                        "title": "Is Occupied",
+                        "default": false
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "bed_id": {
+                        "type": "integer",
+                        "title": "Bed Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "room_id",
+                    "bed_number",
+                    "bed_id"
+                ],
+                "title": "Bed"
+            },
+            "BedCreate": {
+                "properties": {
+                    "room_id": {
+                        "type": "integer",
+                        "title": "Room Id"
+                    },
+                    "bed_number": {
+                        "type": "string",
+                        "title": "Bed Number"
+                    },
+                    "bed_type": {
+                        "type": "string",
+                        "title": "Bed Type"
+                    },
+                    "is_occupied": {
+                        "type": "boolean",
+                        "title": "Is Occupied",
+                        "default": false
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "room_id",
+                    "bed_number"
+                ],
+                "title": "BedCreate"
+            },
+            "Building": {
+                "properties": {
+                    "building_name": {
+                        "type": "string",
+                        "title": "Building Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "building_id": {
+                        "type": "integer",
+                        "title": "Building Id"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "building_name",
+                    "building_id",
+                    "created_at"
+                ],
+                "title": "Building"
+            },
+            "BuildingCreate": {
+                "properties": {
+                    "building_name": {
+                        "type": "string",
+                        "title": "Building Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "building_name"
+                ],
+                "title": "BuildingCreate"
+            },
+            "Floor": {
+                "properties": {
+                    "building_id": {
+                        "type": "integer",
+                        "title": "Building Id"
+                    },
+                    "floor_number": {
+                        "type": "string",
+                        "title": "Floor Number"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "floor_id": {
+                        "type": "integer",
+                        "title": "Floor Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "building_id",
+                    "floor_number",
+                    "floor_id"
+                ],
+                "title": "Floor"
+            },
+            "FloorCreate": {
+                "properties": {
+                    "building_id": {
+                        "type": "integer",
+                        "title": "Building Id"
+                    },
+                    "floor_number": {
+                        "type": "string",
+                        "title": "Floor Number"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "building_id",
+                    "floor_number"
+                ],
+                "title": "FloorCreate"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "Medication": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "route": {
+                        "type": "string",
+                        "title": "Route"
+                    },
+                    "unit": {
+                        "type": "string",
+                        "title": "Unit"
+                    },
+                    "instruction": {
+                        "type": "string",
+                        "title": "Instruction"
+                    },
+                    "frequency": {
+                        "type": "string",
+                        "title": "Frequency"
+                    },
+                    "special_instruction": {
+                        "type": "string",
+                        "title": "Special Instruction"
+                    },
+                    "med_id": {
+                        "type": "integer",
+                        "title": "Med Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "med_id"
+                ],
+                "title": "Medication"
+            },
+            "MedicationCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "route": {
+                        "type": "string",
+                        "title": "Route"
+                    },
+                    "unit": {
+                        "type": "string",
+                        "title": "Unit"
+                    },
+                    "instruction": {
+                        "type": "string",
+                        "title": "Instruction"
+                    },
+                    "frequency": {
+                        "type": "string",
+                        "title": "Frequency"
+                    },
+                    "special_instruction": {
+                        "type": "string",
+                        "title": "Special Instruction"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "MedicationCreate"
+            },
+            "MedicationHistory": {
+                "properties": {
+                    "schedule_id": {
+                        "type": "integer",
+                        "title": "Schedule Id"
+                    },
+                    "given_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Given Time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "note": {
+                        "type": "string",
+                        "title": "Note"
+                    },
+                    "given_by": {
+                        "type": "integer",
+                        "title": "Given By"
+                    },
+                    "history_id": {
+                        "type": "integer",
+                        "title": "History Id"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "schedule_id",
+                    "given_time",
+                    "given_by",
+                    "history_id",
+                    "created_at"
+                ],
+                "title": "MedicationHistory"
+            },
+            "MedicationHistoryCreate": {
+                "properties": {
+                    "schedule_id": {
+                        "type": "integer",
+                        "title": "Schedule Id"
+                    },
+                    "given_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Given Time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "note": {
+                        "type": "string",
+                        "title": "Note"
+                    },
+                    "given_by": {
+                        "type": "integer",
+                        "title": "Given By"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "schedule_id",
+                    "given_time",
+                    "given_by"
+                ],
+                "title": "MedicationHistoryCreate"
+            },
+            "MedicationPreset": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "condition_text": {
+                        "type": "string",
+                        "title": "Condition Text"
+                    },
+                    "common_instruction": {
+                        "type": "string",
+                        "title": "Common Instruction"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "preset_id": {
+                        "type": "integer",
+                        "title": "Preset Id"
+                    },
+                    "medications": {
+                        "items": {
+                            "$ref": "#/components/schemas/PresetMedication"
+                        },
+                        "type": "array",
+                        "title": "Medications"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "preset_id",
+                    "medications"
+                ],
+                "title": "MedicationPreset"
+            },
+            "MedicationPresetCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "condition_text": {
+                        "type": "string",
+                        "title": "Condition Text"
+                    },
+                    "common_instruction": {
+                        "type": "string",
+                        "title": "Common Instruction"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "medications": {
+                        "items": {
+                            "$ref": "#/components/schemas/PresetMedicationCreate"
+                        },
+                        "type": "array",
+                        "title": "Medications"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "medications"
+                ],
+                "title": "MedicationPresetCreate"
+            },
+            "MedicationSchedule": {
+                "properties": {
+                    "patient_id": {
+                        "type": "integer",
+                        "title": "Patient Id"
+                    },
+                    "nurse_id": {
+                        "type": "integer",
+                        "title": "Nurse Id"
+                    },
+                    "med_id": {
+                        "type": "integer",
+                        "title": "Med Id"
+                    },
+                    "take_time_number": {
+                        "type": "integer",
+                        "title": "Take Time Number",
+                        "default": 1
+                    },
+                    "schedule_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Schedule Time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "note": {
+                        "type": "string",
+                        "title": "Note"
+                    },
+                    "is_completed": {
+                        "type": "boolean",
+                        "title": "Is Completed",
+                        "default": false
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Updated At"
+                    },
+                    "schedule_id": {
+                        "type": "integer",
+                        "title": "Schedule Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "patient_id",
+                    "med_id",
+                    "schedule_time",
+                    "schedule_id"
+                ],
+                "title": "MedicationSchedule"
+            },
+            "MedicationScheduleCreate": {
+                "properties": {
+                    "patient_id": {
+                        "type": "integer",
+                        "title": "Patient Id"
+                    },
+                    "nurse_id": {
+                        "type": "integer",
+                        "title": "Nurse Id"
+                    },
+                    "med_id": {
+                        "type": "integer",
+                        "title": "Med Id"
+                    },
+                    "take_time_number": {
+                        "type": "integer",
+                        "title": "Take Time Number",
+                        "default": 1
+                    },
+                    "schedule_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Schedule Time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "note": {
+                        "type": "string",
+                        "title": "Note"
+                    },
+                    "is_completed": {
+                        "type": "boolean",
+                        "title": "Is Completed",
+                        "default": false
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Updated At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "patient_id",
+                    "med_id",
+                    "schedule_time"
+                ],
+                "title": "MedicationScheduleCreate"
+            },
+            "Nurse": {
+                "properties": {
+                    "ward_id": {
+                        "type": "integer",
+                        "title": "Ward Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "position": {
+                        "type": "string",
+                        "title": "Position"
+                    },
+                    "shift": {
+                        "type": "string",
+                        "title": "Shift"
+                    },
+                    "contact": {
+                        "type": "string",
+                        "title": "Contact"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "nurse_id": {
+                        "type": "integer",
+                        "title": "Nurse Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ward_id",
+                    "name",
+                    "nurse_id"
+                ],
+                "title": "Nurse"
+            },
+            "NurseCreate": {
+                "properties": {
+                    "ward_id": {
+                        "type": "integer",
+                        "title": "Ward Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "position": {
+                        "type": "string",
+                        "title": "Position"
+                    },
+                    "shift": {
+                        "type": "string",
+                        "title": "Shift"
+                    },
+                    "contact": {
+                        "type": "string",
+                        "title": "Contact"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ward_id",
+                    "name"
+                ],
+                "title": "NurseCreate"
+            },
+            "Patient": {
+                "properties": {
+                    "bed_id": {
+                        "type": "integer",
+                        "title": "Bed Id"
+                    },
+                    "hn": {
+                        "type": "string",
+                        "title": "Hn"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Dob"
+                    },
+                    "admission_date": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Admission Date"
+                    },
+                    "diagnosis": {
+                        "type": "string",
+                        "title": "Diagnosis"
+                    },
+                    "allergies": {
+                        "type": "string",
+                        "title": "Allergies"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "patient_id": {
+                        "type": "integer",
+                        "title": "Patient Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bed_id",
+                    "hn",
+                    "name",
+                    "patient_id"
+                ],
+                "title": "Patient"
+            },
+            "PatientCreate": {
+                "properties": {
+                    "bed_id": {
+                        "type": "integer",
+                        "title": "Bed Id"
+                    },
+                    "hn": {
+                        "type": "string",
+                        "title": "Hn"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Dob"
+                    },
+                    "admission_date": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Admission Date"
+                    },
+                    "diagnosis": {
+                        "type": "string",
+                        "title": "Diagnosis"
+                    },
+                    "allergies": {
+                        "type": "string",
+                        "title": "Allergies"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bed_id",
+                    "hn",
+                    "name"
+                ],
+                "title": "PatientCreate"
+            },
+            "PresetMedication": {
+                "properties": {
+                    "med_id": {
+                        "type": "integer",
+                        "title": "Med Id"
+                    },
+                    "dosage": {
+                        "type": "string",
+                        "title": "Dosage"
+                    },
+                    "frequency": {
+                        "type": "string",
+                        "title": "Frequency"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "title": "Duration"
+                    },
+                    "special_instruction": {
+                        "type": "string",
+                        "title": "Special Instruction"
+                    },
+                    "preset_med_id": {
+                        "type": "integer",
+                        "title": "Preset Med Id"
+                    },
+                    "preset_id": {
+                        "type": "integer",
+                        "title": "Preset Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "med_id",
+                    "preset_med_id",
+                    "preset_id"
+                ],
+                "title": "PresetMedication"
+            },
+            "PresetMedicationCreate": {
+                "properties": {
+                    "med_id": {
+                        "type": "integer",
+                        "title": "Med Id"
+                    },
+                    "dosage": {
+                        "type": "string",
+                        "title": "Dosage"
+                    },
+                    "frequency": {
+                        "type": "string",
+                        "title": "Frequency"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "title": "Duration"
+                    },
+                    "special_instruction": {
+                        "type": "string",
+                        "title": "Special Instruction"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "med_id"
+                ],
+                "title": "PresetMedicationCreate"
+            },
+            "Room": {
+                "properties": {
+                    "floor_id": {
+                        "type": "integer",
+                        "title": "Floor Id"
+                    },
+                    "ward_id": {
+                        "type": "integer",
+                        "title": "Ward Id"
+                    },
+                    "room_number": {
+                        "type": "string",
+                        "title": "Room Number"
+                    },
+                    "room_type": {
+                        "type": "string",
+                        "title": "Room Type"
+                    },
+                    "capacity": {
+                        "type": "integer",
+                        "title": "Capacity"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "room_id": {
+                        "type": "integer",
+                        "title": "Room Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "floor_id",
+                    "ward_id",
+                    "room_number",
+                    "room_id"
+                ],
+                "title": "Room"
+            },
+            "RoomCreate": {
+                "properties": {
+                    "floor_id": {
+                        "type": "integer",
+                        "title": "Floor Id"
+                    },
+                    "ward_id": {
+                        "type": "integer",
+                        "title": "Ward Id"
+                    },
+                    "room_number": {
+                        "type": "string",
+                        "title": "Room Number"
+                    },
+                    "room_type": {
+                        "type": "string",
+                        "title": "Room Type"
+                    },
+                    "capacity": {
+                        "type": "integer",
+                        "title": "Capacity"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "floor_id",
+                    "ward_id",
+                    "room_number"
+                ],
+                "title": "RoomCreate"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "Ward": {
+                "properties": {
+                    "ward_name": {
+                        "type": "string",
+                        "title": "Ward Name"
+                    },
+                    "ward_type": {
+                        "type": "string",
+                        "title": "Ward Type"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    },
+                    "ward_id": {
+                        "type": "integer",
+                        "title": "Ward Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ward_name",
+                    "ward_id"
+                ],
+                "title": "Ward"
+            },
+            "WardCreate": {
+                "properties": {
+                    "ward_name": {
+                        "type": "string",
+                        "title": "Ward Name"
+                    },
+                    "ward_type": {
+                        "type": "string",
+                        "title": "Ward Type"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ward_name"
+                ],
+                "title": "WardCreate"
+            }
+        }
+    }
+}
