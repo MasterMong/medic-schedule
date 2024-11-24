@@ -1,0 +1,27 @@
+
+{% if activities %}
+    {% for activity in activities %}
+    <div class="py-3 border-b last:border-0">
+        <div class="flex items-start">
+            <div class="flex-1">
+                <p class="text-sm">
+                    <span class="font-semibold">{{ activity.medication_schedule.patient.name }}</span>
+                    received
+                    <span class="font-semibold">{{ activity.medication_schedule.medication.name }}</span>
+                </p>
+                <p class="text-xs text-gray-500">
+                    Given by {{ activity.nurse.name }} at {{ activity.given_time.strftime("%H:%M") }}
+                </p>
+                {% if activity.note %}
+                <p class="text-xs text-gray-600 mt-1">Note: {{ activity.note }}</p>
+                {% endif %}
+            </div>
+            <div class="text-xs text-gray-400">
+                {{ activity.created_at.strftime("%Y-%m-%d %H:%M") }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="py-4 text-gray-500 text-center">No recent activities</p>
+{% endif %}

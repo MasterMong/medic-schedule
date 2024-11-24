@@ -3,6 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+from datetime import datetime  # Add this
+from sqlalchemy import func  # Add this
 from .routers import (
     buildings, floors, wards, rooms, beds,
     nurses, patients, medications,
@@ -184,16 +186,25 @@ async def get_today_count():
         db.close()
 
 @app.get("/api/dashboard/recent-activity")
-async def get_recent_activity():
+async def get_recent_activity(request: Request):  # Add request parameter here
     db = SessionLocal()
     try:
         activities = db.query(models.MedicationHistory)\
+            .join(models.MedicationSchedule)\
+            .join(models.Patient)\
+            .options(
+                joinedload(models.MedicationHistory.medication_schedule)
+                .joinedload(models.MedicationSchedule.patient),
+                joinedload(models.MedicationHistory.medication_schedule)
+                .joinedload(models.MedicationSchedule.medication),
+                joinedload(models.MedicationHistory.nurse)
+            )\
             .order_by(models.MedicationHistory.created_at.desc())\
             .limit(5)\
             .all()
         return templates.TemplateResponse(
             "components/recent_activity.html",
-            {"request": None, "activities": activities}
+            {"request": request, "activities": activities}
         )
     finally:
         db.close()
