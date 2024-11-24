@@ -115,8 +115,9 @@ CREATE TABLE preset_medications (
 CREATE TABLE medication_schedules (
     schedule_id INT PRIMARY KEY AUTO_INCREMENT,
     patient_id INT,
-    nurse_id INT,
+    nurse_id INT NULL,  -- Changed to nullable
     med_id INT,
+    take_time_number INT NOT NULL DEFAULT 1,
     schedule_time DATETIME,
     status VARCHAR(50),
     note TEXT,

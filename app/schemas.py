@@ -170,8 +170,9 @@ class MedicationPreset(MedicationPresetBase):
 
 class MedicationScheduleBase(BaseModel):
     patient_id: int
-    nurse_id: int
+    nurse_id: Optional[int] = None  # Changed to Optional
     med_id: int
+    take_time_number: int = 1
     schedule_time: datetime
     status: Optional[str] = None
     note: Optional[str] = None

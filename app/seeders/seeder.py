@@ -145,6 +145,53 @@ def seed_data(db: Session):
     db.add_all(preset_meds)
     db.commit()
 
+    # Seed some test patients
+    patients = [
+        models.Patient(
+            bed_id=1,  # Assuming bed with ID 1 exists
+            hn="HN001",
+            name="John Doe",
+            dob=date(1990, 1, 1),
+            admission_date=date.today(),
+            diagnosis="Fever",
+            status="Admitted"
+        ),
+        models.Patient(
+            bed_id=2,  # Assuming bed with ID 2 exists
+            hn="HN002",
+            name="Jane Smith",
+            dob=date(1985, 5, 15),
+            admission_date=date.today(),
+            diagnosis="Post-surgery recovery",
+            status="Admitted"
+        )
+    ]
+    db.add_all(patients)
+    db.commit()
+
+    # Seed medication schedules
+    current_time = datetime.now()
+    schedules = [
+        models.MedicationSchedule(
+            patient_id=patients[0].patient_id,
+            nurse_id=1,  # Assuming nurse with ID 1 exists
+            med_id=medications[0].med_id,
+            take_time_number=1,
+            schedule_time=current_time + timedelta(hours=6),
+            status="Scheduled"
+        ),
+        models.MedicationSchedule(
+            patient_id=patients[0].patient_id,
+            nurse_id=1,
+            med_id=medications[0].med_id,
+            take_time_number=2,
+            schedule_time=current_time + timedelta(hours=12),
+            status="Scheduled"
+        )
+    ]
+    db.add_all(schedules)
+    db.commit()
+
 def clear_tables(db: Session):
     # Delete in reverse order of dependencies
     db.query(models.MedicationHistory).delete()

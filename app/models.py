@@ -129,8 +129,9 @@ class MedicationSchedule(Base):
     __tablename__ = "medication_schedules"
     schedule_id = Column(Integer, primary_key=True, index=True)
     patient_id = Column(Integer, ForeignKey("patients.patient_id"))
-    nurse_id = Column(Integer, ForeignKey("nurses.nurse_id"))
+    nurse_id = Column(Integer, ForeignKey("nurses.nurse_id"), nullable=True)  # Changed to nullable
     med_id = Column(Integer, ForeignKey("medications.med_id"))
+    take_time_number = Column(Integer, nullable=False, default=1)
     schedule_time = Column(DateTime)
     status = Column(String(50))
     note = Column(Text)
