@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+{% block title %}Medications{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between mb-6">
+        <h2 class="text-2xl font-bold">Medications</h2>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded"
+                hx-get="/medications/new"
+                hx-target="#medicationModal">
+            Add Medication
+        </button>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-4">
+        <input type="text" 
+               placeholder="Search medications..."
+               class="w-full p-2 border rounded"
+               hx-get="/api/medications/search"
+               hx-trigger="keyup changed delay:500ms"
+               hx-target="#medicationsList">
+    </div>
+
+    <!-- Medications List -->
+    <div id="medicationsList" class="divide-y">
+        {% for medication in medications %}
+        <div class="py-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold">{{ medication.name }}</h3>
+                    <p class="text-sm text-gray-600">{{ medication.type }}</p>
+                    <p class="text-sm">
+                        Route: {{ medication.route or 'N/A' }} | 
+                        Unit: {{ medication.unit or 'N/A' }}
+                    </p>
+                    {% if medication.instruction %}
+                    <p class="text-sm mt-1 text-gray-600">
+                        {{ medication.instruction }}
+                    </p>
+                    {% endif %}
+                </div>
+                <div class="space-x-2">
+                    <button class="text-blue-500 hover:underline"
+                            hx-get="/medications/{{ medication.med_id }}/edit"
+                            hx-target="#medicationModal">
+                        Edit
+                    </button>
+                    <button class="text-red-500 hover:underline"
+                            hx-delete="/api/medications/{{ medication.med_id }}"
+                            hx-confirm="Are you sure you want to delete this medication?"
+                            hx-target="#medicationsList">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal for medication form -->
+<div id="medicationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+</div>
+{% endblock %}

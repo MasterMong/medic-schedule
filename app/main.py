@@ -79,6 +79,14 @@ async def presets_page(request: Request):
         {"request": request, "presets": presets}
     )
 
+@app.get("/medications", response_class=HTMLResponse)
+async def medications_page(request: Request):
+    medications = get_medications_from_db()
+    return templates.TemplateResponse(
+        "medications/list.html", 
+        {"request": request, "medications": medications}
+    )
+
 # Helper functions to get data from database
 def get_patients_from_db():
     db = SessionLocal()
@@ -99,14 +107,33 @@ def get_patients_from_db():
 def get_schedules_from_db():
     db = SessionLocal()
     try:
-        return db.query(models.MedicationSchedule).all()
+        return db.query(models.MedicationSchedule)\
+            .join(models.Patient)\
+            .join(models.Medication)\
+            .options(
+                joinedload(models.MedicationSchedule.patient),
+                joinedload(models.MedicationSchedule.medication)
+            )\
+            .all()
     finally:
         db.close()
 
 def get_medication_presets_from_db():
     db = SessionLocal()
     try:
-        return db.query(models.MedicationPreset).all()
+        return db.query(models.MedicationPreset)\
+            .options(
+                joinedload(models.MedicationPreset.medications)
+                .joinedload(models.PresetMedication.medication)
+            )\
+            .all()
+    finally:
+        db.close()
+
+def get_medications_from_db():
+    db = SessionLocal()
+    try:
+        return db.query(models.Medication).all()
     finally:
         db.close()
 
