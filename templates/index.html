@@ -1,0 +1,77 @@
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Dashboard Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Pending Medications</h3>
+            <p class="text-3xl font-bold text-blue-600"
+               hx-get="/api/dashboard/pending-count"
+               hx-trigger="load, every 30s">
+                Loading...
+            </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Active Patients</h3>
+            <p class="text-3xl font-bold text-green-600"
+               hx-get="/api/dashboard/patients-count"
+               hx-trigger="load">
+                Loading...
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Today's Schedule</h3>
+            <p class="text-3xl font-bold text-purple-600"
+               hx-get="/api/dashboard/today-count"
+               hx-trigger="load, every 60s">
+                Loading...
+            </p>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4">Recent Activity</h2>
+        <div id="recentActivity"
+             hx-get="/api/dashboard/recent-activity"
+             hx-trigger="load, every 60s"
+             class="divide-y">
+            <p class="py-4 text-gray-500">Loading recent activities...</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="/patients" class="bg-blue-500 text-white p-4 rounded-lg text-center hover:bg-blue-600">
+            <h3 class="font-bold">Manage Patients</h3>
+            <p class="text-sm mt-1">View and update patient records</p>
+        </a>
+        
+        <a href="/schedules" class="bg-green-500 text-white p-4 rounded-lg text-center hover:bg-green-600">
+            <h3 class="font-bold">Medication Schedules</h3>
+            <p class="text-sm mt-1">Track and manage medications</p>
+        </a>
+        
+        <a href="/medications/presets" class="bg-purple-500 text-white p-4 rounded-lg text-center hover:bg-purple-600">
+            <h3 class="font-bold">Medication Presets</h3>
+            <p class="text-sm mt-1">Configure medication templates</p>
+        </a>
+        
+        <button class="bg-yellow-500 text-white p-4 rounded-lg text-center hover:bg-yellow-600"
+                hx-get="/api/reports/generate"
+                hx-target="#reportModal">
+            <h3 class="font-bold">Generate Reports</h3>
+            <p class="text-sm mt-1">View medication statistics</p>
+        </button>
+    </div>
+</div>
+
+<!-- Report Modal -->
+<div id="reportModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+</div>
+{% endblock %}

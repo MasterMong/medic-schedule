@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between mb-6">
+        <h2 class="text-2xl font-bold">Patients</h2>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded"
+                hx-get="/patients/new"
+                hx-target="#patientModal">
+            Add Patient
+        </button>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="mb-4">
+        <input type="text" 
+               placeholder="Search by HN or name..."
+               class="w-full p-2 border rounded"
+               hx-get="/api/patients/search"
+               hx-trigger="keyup changed delay:500ms"
+               hx-target="#patientsList">
+    </div>
+
+    <!-- Patient List -->
+    <div id="patientsList" class="divide-y">
+        {% for patient in patients %}
+        <div class="py-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold">{{ patient.name }}</h3>
+                    <p class="text-sm text-gray-600">HN: {{ patient.hn }}</p>
+                    <p class="text-sm">
+                        {% if patient.bed and patient.bed.room and patient.bed.room.ward %}
+                            {{ patient.bed.room.ward.ward_name }} - 
+                            Room {{ patient.bed.room.room_number }} - 
+                            Bed {{ patient.bed.bed_number }}
+                        {% else %}
+                            No bed assigned
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="text-right">
+                    <button class="text-blue-500 hover:underline"
+                            hx-get="/patients/{{ patient.id }}"
+                            hx-target="#mainContent">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal for patient form -->
+<div id="patientModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+</div>
+{% endblock %}

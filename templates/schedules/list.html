@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+{% block title %}Medication Schedules{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between mb-6">
+        <h2 class="text-2xl font-bold">Medication Schedules</h2>
+        <div class="space-x-2">
+            <select class="border p-2 rounded"
+                    hx-get="/api/schedules/filter"
+                    hx-target="#schedulesList">
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="all">All</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Schedule List with real-time updates -->
+    <div id="schedulesList" 
+         class="divide-y"
+         hx-get="/api/schedules/list"
+         hx-trigger="every 60s">
+        {% for schedule in schedules %}
+        <div class="py-4 {% if schedule.is_due %}bg-yellow-50{% endif %}">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold">{{ schedule.patient.name }}</h3>
+                    <p class="text-sm text-gray-600">
+                        {{ schedule.medication.name }} - {{ schedule.dosage }}
+                    </p>
+                    <p class="text-sm">
+                        Scheduled: {{ schedule.schedule_time.strftime("%H:%M") }}
+                    </p>
+                </div>
+                <div>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded"
+                            hx-post="/api/schedules/{{ schedule.id }}/complete"
+                            hx-target="#schedulesList">
+                        Complete
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Notification sound for due medications -->
+<audio id="medicationAlert" src="/static/alert.mp3"></audio>
+{% endblock %}

@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+{% block title %}Medication Presets{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between mb-6">
+        <h2 class="text-2xl font-bold">Medication Presets</h2>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded"
+                hx-get="/medications/presets/new"
+                hx-target="#presetModal">
+            New Preset
+        </button>
+    </div>
+
+    <!-- Preset List -->
+    <div id="presetsList" class="divide-y">
+        {% for preset in presets %}
+        <div class="py-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-bold">{{ preset.name }}</h3>
+                    <p class="text-sm text-gray-600">{{ preset.description }}</p>
+                    <!-- Medication List -->
+                    <div class="mt-2 space-y-2">
+                        {% for med in preset.medications %}
+                        <div class="text-sm bg-gray-50 p-2 rounded">
+                            {{ med.name }} - {{ med.dosage }} {{ med.frequency }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="space-x-2">
+                    <button class="text-blue-500 hover:underline"
+                            hx-get="/medications/presets/{{ preset.id }}/edit"
+                            hx-target="#presetModal">
+                        Edit
+                    </button>
+                    <button class="text-red-500 hover:underline"
+                            hx-delete="/api/medication-presets/{{ preset.id }}"
+                            hx-confirm="Are you sure you want to delete this preset?"
+                            hx-target="#presetsList">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal for preset form -->
+<div id="presetModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+</div>
+{% endblock %}
