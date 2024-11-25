@@ -6,6 +6,11 @@
             <p class="text-sm text-gray-600">
                 {{ schedule.medication.name }} {% if schedule.note %}- {{ schedule.note }}{% endif %}
             </p>
+            <p class="text-sm text-gray-500">
+                Location: Ward {{ schedule.patient.bed.room.ward.ward_name }}, 
+                Room {{ schedule.patient.bed.room.room_number }}, 
+                Bed {{ schedule.patient.bed.bed_number }}
+            </p>
             <p class="text-sm">
                 Scheduled: {{ schedule.schedule_time.strftime("%H:%M") }}
             </p>
@@ -16,7 +21,7 @@
                 Edit
             </button>
             <button class="bg-green-500 text-white px-3 py-1 rounded text-sm"
-                    hx-post="/api/schedules/complete/{{ schedule.schedule_id }}"
+                    hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
                     hx-target="#schedulesList">
                 Complete
             </button>
