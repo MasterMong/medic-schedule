@@ -32,7 +32,11 @@ async def filter_schedules(
     schedules = query.order_by(models.MedicationSchedule.schedule_time).all()
     return templates.TemplateResponse(
         "schedules/_list.html",
-        {"request": request, "schedules": schedules}
+        {
+            "request": request, 
+            "schedules": schedules,
+            "now": datetime.now()  # Add current time
+        }
     )
 
 @router.get("/list", response_class=HTMLResponse)
@@ -51,7 +55,11 @@ def get_schedules_list(request: Request, db: Session = Depends(get_db)):
         .all()
     return templates.TemplateResponse(
         "schedules/_list.html",
-        {"request": request, "schedules": schedules}
+        {
+            "request": request, 
+            "schedules": schedules,
+            "now": datetime.now()  # Add current time
+        }
     )
 
 @router.get("/", response_model=List[schemas.MedicationSchedule])
@@ -109,7 +117,11 @@ async def create_medication_schedule(
     
     return templates.TemplateResponse(
         "schedules/_list.html",
-        {"request": request, "schedules": schedules}
+        {
+            "request": request, 
+            "schedules": schedules,
+            "now": datetime.now()  # Add current time
+        }
     )
 
 @router.get("/upcoming", response_class=HTMLResponse)

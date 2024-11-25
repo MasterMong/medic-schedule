@@ -90,7 +90,8 @@ async def schedules_page(request: Request):
                 "schedules": schedules,
                 "patients": patients,
                 "medications": medications,
-                "current_status": "pending"
+                "current_status": "pending",
+                "now": datetime.now()  # Add this line
             }
         )
     finally:
