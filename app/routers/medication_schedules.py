@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Form, Query
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session, joinedload
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 from .. import models, schemas
 from ..database import get_db
 from fastapi.templating import Jinja2Templates
@@ -65,24 +65,48 @@ async def create_medication_schedule(
     patient_id: int = Form(...),
     med_id: int = Form(...),
     schedule_time: str = Form(...),
+    take_time_number: int = Form(...),  # Add this
+    duration_hours: int = Form(...),    # Add this
     note: str = Form(None),
     db: Session = Depends(get_db)
 ):
-    schedule_data = {
-        "patient_id": patient_id,
-        "med_id": med_id,
-        "schedule_time": datetime.fromisoformat(schedule_time),
-        "note": note,
-        "status": "pending",
-        "is_completed": False
-    }
+    base_time = datetime.fromisoformat(schedule_time)
+    schedules_to_create = []
     
-    db_schedule = models.MedicationSchedule(**schedule_data)
-    db.add(db_schedule)
+    # Calculate schedule times based on take_time_number and duration
+    for i in range(take_time_number):
+        schedule_time = base_time + timedelta(hours=(duration_hours * i))
+        schedule_data = {
+            "patient_id": patient_id,
+            "med_id": med_id,
+            "schedule_time": schedule_time,
+            "note": note,
+            "status": "pending",
+            "is_completed": False,
+            "take_time_number": i + 1
+        }
+        schedules_to_create.append(models.MedicationSchedule(**schedule_data))
+    
+    # Bulk create all schedules
+    db.add_all(schedules_to_create)
     db.commit()
-    db.refresh(db_schedule)
+    for schedule in schedules_to_create:
+        db.refresh(schedule)
     
-    schedules = db.query(models.MedicationSchedule).all()
+    # Get updated schedules list
+    schedules = db.query(models.MedicationSchedule)\
+        .join(models.Patient)\
+        .join(models.Medication)\
+        .filter(models.MedicationSchedule.is_completed == False)\
+        .options(
+            joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
+            .joinedload(models.Bed.room)
+            .joinedload(models.Room.ward),
+            joinedload(models.MedicationSchedule.medication)
+        )\
+        .order_by(models.MedicationSchedule.schedule_time)\
+        .all()
+    
     return templates.TemplateResponse(
         "schedules/_list.html",
         {"request": request, "schedules": schedules}

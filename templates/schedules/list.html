@@ -63,6 +63,28 @@
                     <label>Schedule Time</label>
                     <input type="datetime-local" name="schedule_time" class="w-full border rounded p-2" required>
                 </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label>Take Time Number</label>
+                        <input type="number" 
+                               name="take_time_number" 
+                               class="w-full border rounded p-2" 
+                               min="1" 
+                               max="12" 
+                               value="1" 
+                               required>
+                    </div>
+                    <div>
+                        <label>Duration (hours)</label>
+                        <input type="number" 
+                               name="duration_hours" 
+                               class="w-full border rounded p-2" 
+                               min="1" 
+                               max="24" 
+                               value="2" 
+                               required>
+                    </div>
+                </div>
                 <div>
                     <label>Note</label>
                     <textarea name="note" class="w-full border rounded p-2"></textarea>
