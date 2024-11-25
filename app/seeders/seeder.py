@@ -123,13 +123,17 @@ def seed_data(db: Session):
     db.commit()
     db.add_all(wards)
     db.commit()
-    # Seed rooms
+    
+    # Find ศัลยกรรม ward
+    surgery_ward = next(ward for ward in wards if ward.ward_name == "ศัลยกรรม")
+
+    # Seed rooms only for ศัลยกรรม ward
     rooms = []
     for floor in floors:
         for i in range(1, 5):
             room = models.Room(
                 floor_id=floor.floor_id,
-                ward_id=wards[i % len(wards)].ward_id,
+                ward_id=surgery_ward.ward_id,
                 room_number=f"{floor.floor_number}{str(i).zfill(2)}",
                 room_type="ปกติ",
                 capacity=4
@@ -138,7 +142,7 @@ def seed_data(db: Session):
             rooms.append(room)
     db.commit()
     
-    # Seed beds
+    # Seed beds only for ศัลยกรรม rooms
     for room in rooms:
         for i in range(1, room.capacity + 1):
             bed = models.Bed(
@@ -395,9 +399,10 @@ def seed_data(db: Session):
     db.commit()
 
     # Seed patients - one per bed with ward and room info
-    beds = db.query(models.Bed).join(models.Room).join(models.Ward).all()
+    beds = db.query(models.Bed).join(models.Room).join(models.Ward).filter(models.Ward.ward_name == "ศัลยกรรม").all()
     patients = []
-    for bed in beds:
+    for i in range(10):
+        bed = beds[i]
         ward_name = bed.room.ward.ward_name
         room_number = bed.room.room_number
         bed_number = bed.bed_number
@@ -405,7 +410,7 @@ def seed_data(db: Session):
         patient = models.Patient(
             bed_id=bed.bed_id,
             hn=f"HN{str(bed.bed_id).zfill(6)}", 
-            name=f"ผู้ป่วย {ward_name} ห้อง {room_number} เตียง {bed_number}",
+            name=f"{ward_name} ห้อง {room_number} เตียง {bed_number}",
             dob=date(1990, 1, 1),
             admission_date=date.today(),
             diagnosis="Observation",
