@@ -43,7 +43,7 @@ app.include_router(nurses.router, prefix="/api/nurses", tags=["nurses"])
 app.include_router(patients.router, prefix="/api/patients", tags=["patients"])
 app.include_router(medications.router, prefix="/api/medications", tags=["medications"])
 app.include_router(medication_presets.router, prefix="/api/medication-presets", tags=["medication-presets"])
-app.include_router(medication_schedules.router, prefix="/api/medication-schedules", tags=["medication-schedules"])
+app.include_router(medication_schedules.router, prefix="/api/schedules", tags=["schedules"])
 app.include_router(medication_history.router, prefix="/api/medication-history", tags=["medication-history"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(
@@ -67,11 +67,29 @@ async def patients_page(request: Request):
 
 @app.get("/schedules", response_class=HTMLResponse)
 async def schedules_page(request: Request):
-    schedules = get_schedules_from_db()  # You'll need to implement this
-    return templates.TemplateResponse(
-        "schedules/list.html", 
-        {"request": request, "schedules": schedules}
-    )
+    db = SessionLocal()
+    try:
+        schedules = db.query(models.MedicationSchedule)\
+            .join(models.Patient)\
+            .join(models.Medication)\
+            .options(
+                joinedload(models.MedicationSchedule.patient),
+                joinedload(models.MedicationSchedule.medication)
+            )\
+            .all()
+        patients = db.query(models.Patient).all()
+        medications = db.query(models.Medication).all()
+        return templates.TemplateResponse(
+            "schedules/list.html", 
+            {
+                "request": request, 
+                "schedules": schedules,
+                "patients": patients,
+                "medications": medications
+            }
+        )
+    finally:
+        db.close()
 
 @app.get("/medications/presets", response_class=HTMLResponse)
 async def presets_page(request: Request):

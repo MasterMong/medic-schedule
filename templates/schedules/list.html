@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% block title %}Medication Schedules{% endblock %}
 
@@ -7,6 +6,10 @@
     <div class="flex justify-between mb-6">
         <h2 class="text-2xl font-bold">Medication Schedules</h2>
         <div class="space-x-2">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded"
+                    onclick="document.getElementById('createScheduleModal').classList.remove('hidden')">
+                Add Schedule
+            </button>
             <select class="border p-2 rounded"
                     hx-get="/api/schedules/filter"
                     hx-target="#schedulesList">
@@ -21,7 +24,7 @@
     <div id="schedulesList" 
          class="divide-y"
          hx-get="/api/schedules/list"
-         hx-trigger="every 60s">
+         hx-trigger="every 60s, load">
         {% for schedule in schedules %}
         <div class="py-4 {% if schedule.is_due %}bg-yellow-50{% endif %}">
             <div class="flex justify-between items-start">
@@ -34,11 +37,21 @@
                         Scheduled: {{ schedule.schedule_time.strftime("%H:%M") }}
                     </p>
                 </div>
-                <div>
-                    <button class="bg-green-500 text-white px-4 py-2 rounded"
+                <div class="space-x-2">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+                            onclick="editSchedule('{{ schedule.id }}')">
+                        Edit
+                    </button>
+                    <button class="bg-green-500 text-white px-3 py-1 rounded text-sm"
                             hx-post="/api/schedules/{{ schedule.id }}/complete"
                             hx-target="#schedulesList">
                         Complete
+                    </button>
+                    <button class="bg-red-500 text-white px-3 py-1 rounded text-sm"
+                            hx-delete="/api/schedules/{{ schedule.id }}"
+                            hx-confirm="Are you sure you want to delete this schedule?"
+                            hx-target="#schedulesList">
+                        Delete
                     </button>
                 </div>
             </div>
@@ -47,6 +60,82 @@
     </div>
 </div>
 
+<!-- Create Schedule Modal -->
+<div id="createScheduleModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+            <h3 class="text-lg font-medium">Create New Schedule</h3>
+            <form id="createScheduleForm"
+                  hx-post="/api/schedules" 
+                  hx-target="#schedulesList"
+                  hx-swap="innerHTML"
+                  hx-on::after-request="handleFormSubmission(event)"
+                  class="mt-2 space-y-4">
+                <div>
+                    <label>Patient</label>
+                    <select name="patient_id" class="w-full border rounded p-2" required>
+                        {% for patient in patients %}
+                        <option value="{{ patient.patient_id }}">{{ patient.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Medication</label>
+                    <select name="med_id" class="w-full border rounded p-2" required>
+                        {% for medication in medications %}
+                        <option value="{{ medication.med_id }}">{{ medication.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Schedule Time</label>
+                    <input type="datetime-local" name="schedule_time" class="w-full border rounded p-2" required>
+                </div>
+                <div>
+                    <label>Note</label>
+                    <textarea name="note" class="w-full border rounded p-2"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" 
+                            class="bg-gray-300 px-4 py-2 rounded"
+                            onclick="document.getElementById('createScheduleModal').classList.add('hidden')">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Schedule Modal -->
+<div id="editScheduleModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <!-- Similar to create modal but with pre-filled values -->
+</div>
+
 <!-- Notification sound for due medications -->
 <audio id="medicationAlert" src="/static/alert.mp3"></audio>
+
+<script>
+// Add this function to handle form submission
+function handleFormSubmission(event) {
+    if (event.detail.successful) {
+        // Close the modal
+        document.getElementById('createScheduleModal').classList.add('hidden');
+        // Reset the form
+        document.getElementById('createScheduleForm').reset();
+    }
+}
+
+function editSchedule(id) {
+    fetch(`/api/schedules/${id}`)
+        .then(response => response.json())
+        .then(schedule => {
+            // Populate and show edit modal
+            document.getElementById('editScheduleModal').classList.remove('hidden');
+        });
+}
+</script>
 {% endblock %}

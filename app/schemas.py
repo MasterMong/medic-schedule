@@ -179,8 +179,17 @@ class MedicationScheduleBase(BaseModel):
     is_completed: bool = False
     updated_at: Optional[datetime] = None
 
-class MedicationScheduleCreate(MedicationScheduleBase):
-    pass
+class MedicationScheduleCreate(BaseModel):
+    patient_id: int
+    med_id: int
+    schedule_time: datetime
+    note: Optional[str] = None
+    take_time_number: Optional[int] = 1
+    status: Optional[str] = "pending"
+    is_completed: Optional[bool] = False
+
+    class Config:
+        from_attributes = True  # This replaces orm_mode = True in Pydantic v2
 
 class MedicationSchedule(MedicationScheduleBase):
     schedule_id: int
