@@ -23,7 +23,7 @@
                                 {{ minutes|int }}m
                             {% endif %}
                         {% else %}
-                            Due now
+                            ถึงเวลารับยา
                         {% endif %}
                     </span>
                 </div>
@@ -32,48 +32,5 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p class="py-4 text-gray-500">No upcoming schedules.</p>
+    <p class="py-4 text-gray-500">ไม่มีรายการที่จะมาถึง</p>
 {% endif %}
-
-{% for schedule in schedules %}
-<div class="flex items-center p-4 {% if not loop.last %}border-b{% endif %} hover:bg-gray-50">
-    <!-- Notification Icon for Overdue -->
-    {% if schedule.schedule_time < current_time and not schedule.is_completed %}
-    <div class="mr-4 text-red-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-    </div>
-    {% endif %}
-
-    <div class="flex-1">
-        <div class="flex items-center mb-1">
-            <h4 class="font-bold">{{schedule.patient.full_name}}</h4>
-            <!-- Time Badge -->
-            {% if schedule.schedule_time < current_time and not schedule.is_completed %}
-            <span class="ml-2 px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">
-                เลยเวลา {{ ((current_time - schedule.schedule_time).total_seconds() / 60)|int }} นาที
-            </span>
-            {% else %}
-            <span class="ml-2 px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">
-                อีก {{ ((schedule.schedule_time - current_time).total_seconds() / 60)|int }} นาที
-            </span>
-            {% endif %}
-        </div>
-        <p class="text-sm text-gray-600">เวลา: {{schedule.schedule_time.strftime('%H:%M')}}</p>
-        <p class="text-sm text-gray-600">ยา: {{schedule.medication.name}}</p>
-        <p class="text-sm text-gray-600">ห้อง: {{schedule.patient.bed.room.name}} เตียง: {{schedule.patient.bed.name}}</p>
-    </div>
-    
-    <!-- Complete Button -->
-    {% if not schedule.is_completed %}
-    <button class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
-            hx-post="/api/schedules/{{schedule.schedule_id}}/complete"
-            hx-target="#upcomingSchedules">
-        เสร็จสิ้น
-    </button>
-    {% endif %}
-</div>
-{% else %}
-<p class="py-4 text-center text-gray-500">ไม่มีรายการที่จะมาถึง</p>
-{% endfor %}
