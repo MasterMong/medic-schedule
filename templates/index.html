@@ -67,7 +67,7 @@
         </div>
         <div id="upcomingSchedules"
              hx-get="/api/schedules/upcoming?duration=1"
-             hx-trigger="load, every 60s"
+             hx-trigger="load, every 60s, scheduleCompleted from:body"
              class="divide-y">
             <p class="py-4 text-gray-500">กำลังโหลดตารางเวลาที่จะมาถึง...</p>
         </div>

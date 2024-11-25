@@ -252,14 +252,17 @@ def complete_schedule(
         db.add(history)
         db.commit()
         
-        # Get updated upcoming schedules
+        headers = {
+            "HX-Trigger": "scheduleCompleted"  # This will trigger both sections to update
+        }
+            
+        # Get updated overdue schedules
         current_time = datetime.now()
-        upcoming_schedules = db.query(models.MedicationSchedule)\
+        overdue_schedules = db.query(models.MedicationSchedule)\
             .join(models.Patient)\
             .join(models.Medication)\
             .filter(
-                models.MedicationSchedule.schedule_time >= current_time,
-                models.MedicationSchedule.schedule_time <= current_time + timedelta(hours=1),
+                models.MedicationSchedule.schedule_time < current_time,
                 models.MedicationSchedule.is_completed == False
             )\
             .options(
@@ -271,14 +274,15 @@ def complete_schedule(
             .order_by(models.MedicationSchedule.schedule_time)\
             .all()
             
-        # Return updated list template
+        # Return updated overdue list template
         return templates.TemplateResponse(
-            "components/upcoming_schedules.html",
+            "components/overdue_schedules.html",
             {
                 "request": request,
-                "schedules": upcoming_schedules,
+                "schedules": overdue_schedules,
                 "current_time": current_time
-            }
+            },
+            headers=headers  # Add the headers here
         )
         
     except Exception as e:
