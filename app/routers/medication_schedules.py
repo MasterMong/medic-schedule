@@ -154,6 +154,37 @@ async def get_upcoming_schedules(
         }
     )
 
+@router.get("/overdue", response_class=HTMLResponse)
+async def get_overdue_schedules(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    current_time = datetime.now()
+    
+    schedules = db.query(models.MedicationSchedule)\
+        .join(models.Patient)\
+        .join(models.Medication)\
+        .filter(
+            models.MedicationSchedule.schedule_time < current_time,
+            models.MedicationSchedule.is_completed == False
+        )\
+        .options(
+            joinedload(models.MedicationSchedule.patient)
+            .joinedload(models.Patient.bed),
+            joinedload(models.MedicationSchedule.medication)
+        )\
+        .order_by(models.MedicationSchedule.schedule_time)\
+        .all()
+        
+    return templates.TemplateResponse(
+        "components/overdue_schedules.html",
+        {
+            "request": request,
+            "schedules": schedules,
+            "current_time": current_time
+        }
+    )
+
 @router.get("/{schedule_id}", response_model=schemas.MedicationSchedule)
 def get_medication_schedule(schedule_id: int, db: Session = Depends(get_db)):
     schedule = db.query(models.MedicationSchedule).filter(models.MedicationSchedule.schedule_id == schedule_id).first()
