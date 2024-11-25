@@ -23,20 +23,20 @@
                 {% if not schedule.is_completed %}
                     <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm"
                             onclick="editSchedule('{{ schedule.schedule_id }}')">
-                        แก้ไข
+                        ✏️ แก้ไข
                     </button>
                     <button hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
                             hx-swap="none"
                             hx-target="this"
-                            class="..."
+                            class="bg-green-500 text-white px-3 py-1 rounded text-sm"
                             hx-on::after-request="if(event.detail.successful) { htmx.trigger('body', 'scheduleUpdated'); this.classList.add('opacity-50'); this.disabled = true; }">
-                        เสร็จสิ้น
+                        ✅ เสร็จสิ้น
                     </button>
                     <button class="bg-red-500 text-white px-3 py-1 rounded text-sm"
                             hx-delete="/api/schedules/{{ schedule.schedule_id }}"
                             hx-confirm="คุณแน่ใจหรือไม่ว่าต้องการลบตารางนี้?&#13;&#10;&#13;&#10;ผู้ป่วย: {{ schedule.patient.name }}&#13;&#10;ยา: {{ schedule.medication.name }}&#13;&#10;เวลา: {{ schedule.schedule_time.strftime('%H:%M') }}"
                             hx-target="#schedulesList">
-                        ลบ
+                        🗑️ ลบ
                     </button>
                 {% endif %}
             </div>
