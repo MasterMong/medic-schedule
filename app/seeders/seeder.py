@@ -8,8 +8,8 @@ def seed_data(db: Session):
     
     # Seed buildings
     building = models.Building(
-        building_name="Main Hospital Building",
-        description="Main hospital facility with 5 floors"
+        building_name="ตึก 20",
+        description="ตึก 20 มีทั้งหมด 5 ชั้น"
     )
     db.add(building)
     db.commit()
@@ -20,21 +20,104 @@ def seed_data(db: Session):
         floor = models.Floor(
             building_id=building.building_id,
             floor_number=str(i),
-            description=f"Floor {i}"
+            description=f"ชั้น {i}"
         )
         db.add(floor)
         floors.append(floor)
     db.commit()
-    
+
     # Seed wards
     wards = [
-        models.Ward(ward_name="Medical Ward", ward_type="Medical"),
-        models.Ward(ward_name="Surgical Ward", ward_type="Surgical"),
-        models.Ward(ward_name="Pediatric Ward", ward_type="Pediatric")
+        models.Ward(
+            ward_name="กุมารเวชกรรม",
+            ward_type="กุมารเวชกรรม"
+        ),
+        models.Ward(
+            ward_name="จิตเวช",
+            ward_type="จิตเวช"
+        ),
+        models.Ward(
+            ward_name="จักษุ",
+            ward_type="จักษุ"
+        ),
+        models.Ward(
+            ward_name="ทารกแรกเกิด (NICU)",
+            ward_type="ทารกแรกเกิด"
+        ),
+        models.Ward(
+            ward_name="ไตเทียม",
+            ward_type="ไตเทียม"
+        ),
+        models.Ward(
+            ward_name="ประสาทวิทยา",
+            ward_type="ประสาทวิทยา"
+        ),
+        models.Ward(
+            ward_name="มะเร็ง",
+            ward_type="มะเร็งวิทยา"
+        ),
+        models.Ward(
+            ward_name="เวชศาสตร์ฟื้นฟู",
+            ward_type="เวชศาสตร์ฟื้นฟู"
+        ),
+        models.Ward(
+            ward_name="แยกโรคติดเชื้อ",
+            ward_type="โรคติดเชื้อ"
+        ),
+        models.Ward(
+            ward_name="โสต ศอ นาสิก",
+            ward_type="โสต ศอ นาสิก"
+        ),
+        models.Ward(
+            ward_name="ศัลยกรรม",
+            ward_type="ศัลยกรรม"
+        ),
+        models.Ward(
+            ward_name="ศัลยกรรมทรวงอก",
+            ward_type="ศัลยกรรมทรวงอก"
+        ),
+        models.Ward(
+            ward_name="ศัลยกรรมระบบประสาท",
+            ward_type="ศัลยกรรมประสาท"
+        ),
+        models.Ward(
+            ward_name="สูติ-นรีเวชกรรม",
+            ward_type="สูติ-นรีเวชกรรม"
+        ),
+        models.Ward(
+            ward_name="หนัก (ICU)",
+            ward_type="วิกฤต"
+        ),
+        models.Ward(
+            ward_name="หนักโรคหัวใจ (CCU)",
+            ward_type="วิกฤต"
+        ),
+        models.Ward(
+            ward_name="ออร์โธปิดิกส์",
+            ward_type="ออร์โธปิดิกส์"
+        ),
+        models.Ward(
+            ward_name="อายุรกรรม",
+            ward_type="อายุรกรรม"
+        ),
+        models.Ward(
+            ward_name="อายุรกรรมระบบประสาท",
+            ward_type="ประสาทวิทยา"
+        ),
+        models.Ward(
+            ward_name="อายุรกรรมโรคปอด",
+            ward_type="อายุรกรรมปอด"
+        ),
+        models.Ward(
+            ward_name="อุบัติเหตุฉุกเฉิน",
+            ward_type="อุบัติเหตุฉุกเฉิน"
+        )
     ]
+
     db.add_all(wards)
     db.commit()
-    
+    db.add_all(wards)
+    db.commit()
     # Seed rooms
     rooms = []
     for floor in floors:
@@ -43,7 +126,7 @@ def seed_data(db: Session):
                 floor_id=floor.floor_id,
                 ward_id=wards[i % len(wards)].ward_id,
                 room_number=f"{floor.floor_number}{str(i).zfill(2)}",
-                room_type="Standard",
+                room_type="ปกติ",
                 capacity=4
             )
             db.add(room)
@@ -56,19 +139,19 @@ def seed_data(db: Session):
             bed = models.Bed(
                 room_id=room.room_id,
                 bed_number=f"{room.room_number}-{i}",
-                bed_type="Standard"
+                bed_type="ปกติ"
             )
             db.add(bed)
     db.commit()
     
     # Seed nurses
-    shifts = ["Morning", "Afternoon", "Night"]
+    shifts = ["เช้า", "บ่าย", "ดึก"]
     for ward in wards:
         for i in range(1, 4):
             nurse = models.Nurse(
                 ward_id=ward.ward_id,
-                name=f"Nurse {ward.ward_name} {i}",
-                position="Registered Nurse",
+                name=f"พยาบาล {ward.ward_name} {i}",
+                position="พยาบาล",
                 shift=shifts[i % len(shifts)],
                 contact=f"ext-{1000 + i}"
             )
@@ -78,30 +161,191 @@ def seed_data(db: Session):
     # Seed medications
     medications = [
         models.Medication(
-            name="Paracetamol",
-            type="Analgesic",
-            route="Oral",
-            unit="500mg",
-            instruction="Take with water",
-            frequency="Every 6 hours"
+            name="พาราเซตามอล",
+            type="ยาแก้ปวดลดไข้",
+            route="รับประทาน",
+            unit="500มก.",
+            instruction="รับประทานพร้อมน้ำ",
+            frequency="ทุก 6 ชั่วโมง"
         ),
         models.Medication(
-            name="Amoxicillin",
-            type="Antibiotic",
-            route="Oral",
-            unit="250mg",
-            instruction="Take after meal",
-            frequency="Every 8 hours"
+            name="อะม็อกซิซิลลิน",
+            type="ยาปฏิชีวนะ",
+            route="รับประทาน",
+            unit="250มก.",
+            instruction="รับประทานหลังอาหาร",
+            frequency="ทุก 8 ชั่วโมง"
         ),
         models.Medication(
-            name="Ibuprofen",
-            type="NSAID",
-            route="Oral",
-            unit="400mg",
-            instruction="Take with food",
-            frequency="Every 8 hours"
+            name="ไอบูโพรเฟน",
+            type="ยาต้านการอักเสบที่ไม่ใช่สเตียรอยด์",
+            route="รับประทาน",
+            unit="400มก.",
+            instruction="รับประทานพร้อมอาหาร",
+            frequency="ทุก 8 ชั่วโมง"
+        ),
+        models.Medication(
+            name="โอเมพราโซล",
+            type="ยาลดกรดในกระเพาะอาหาร",
+            route="รับประทาน",
+            unit="20มก.",
+            instruction="รับประทานก่อนอาหาร",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="ซิทิริซิน",
+            type="ยาแก้แพ้",
+            route="รับประทาน",
+            unit="10มก.",
+            instruction="รับประทานก่อนนอน",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="เมทฟอร์มิน",
+            type="ยาเบาหวาน",
+            route="รับประทาน",
+            unit="500มก.",
+            instruction="รับประทานพร้อมอาหาร",
+            frequency="วันละ 2 ครั้ง"
+        ),
+        models.Medication(
+            name="อะทอร์วาสแตติน",
+            type="ยาลดไขมัน",
+            route="รับประทาน",
+            unit="20มก.",
+            instruction="รับประทานก่อนนอน",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="โลซาร์แทน",
+            type="ยาความดันโลหิตสูง",
+            route="รับประทาน",
+            unit="50มก.",
+            instruction="รับประทานหลังอาหารเช้า",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="เซอร์ทราลีน",
+            type="ยารักษาโรคซึมเศร้า",
+            route="รับประทาน",
+            unit="50มก.",
+            instruction="รับประทานหลังอาหารเช้า",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="มอนเทลูคาสท์",
+            type="ยาแก้แพ้",
+            route="รับประทาน",
+            unit="10มก.",
+            instruction="รับประทานก่อนนอน",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="เลโวไทร็อกซิน",
+            type="ยาไทรอยด์",
+            route="รับประทาน",
+            unit="100มคก.",
+            instruction="รับประทานก่อนอาหารเช้า",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="ไดคลอฟีแนค",
+            type="ยาแก้ปวดลดการอักเสบ",
+            route="รับประทาน",
+            unit="25มก.",
+            instruction="รับประทานหลังอาหาร",
+            frequency="ทุก 8 ชั่วโมง"
+        ),
+        models.Medication(
+            name="คลอเฟนิรามีน",
+            type="ยาแก้แพ้",
+            route="รับประทาน",
+            unit="4มก.",
+            instruction="รับประทานก่อนนอน",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="แอมบรอกซอล",
+            type="ยาละลายเสมหะ",
+            route="รับประทาน",
+            unit="30มก.",
+            instruction="รับประทานหลังอาหาร",
+            frequency="วันละ 3 ครั้ง"
+        ),
+        models.Medication(
+            name="ดอมเพอริโดน",
+            type="ยาแก้คลื่นไส้",
+            route="รับประทาน",
+            unit="10มก.",
+            instruction="รับประทานก่อนอาหาร",
+            frequency="วันละ 3 ครั้ง"
+        ),
+        models.Medication(
+            name="ไฮโดรคลอโรไทอาไซด์",
+            type="ยาขับปัสสาวะ",
+            route="รับประทาน",
+            unit="25มก.",
+            instruction="รับประทานหลังอาหารเช้า",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="กาบาเพนติน",
+            type="ยารักษาโรคลมชัก",
+            route="รับประทาน",
+            unit="300มก.",
+            instruction="รับประทานก่อนนอน",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="ไซโลเฟน",
+            type="ยาคลายกล้ามเนื้อ",
+            route="รับประทาน",
+            unit="500มก.",
+            instruction="รับประทานหลังอาหาร",
+            frequency="วันละ 3 ครั้ง"
+        ),
+        models.Medication(
+            name="เฟกโซเฟนาดีน",
+            type="ยาแก้แพ้",
+            route="รับประทาน",
+            unit="60มก.",
+            instruction="รับประทานก่อนอาหาร",
+            frequency="วันละ 2 ครั้ง"
+        ),
+        models.Medication(
+            name="คาร์บามาเซพีน",
+            type="ยากันชัก",
+            route="รับประทาน",
+            unit="200มก.",
+            instruction="รับประทานพร้อมอาหาร",
+            frequency="วันละ 2 ครั้ง"
+        ),
+        models.Medication(
+            name="ไรสเพอริโดน",
+            type="ยารักษาโรคจิต",
+            route="รับประทาน",
+            unit="2มก.",
+            instruction="รับประทานหลังอาหารเย็น",
+            frequency="วันละ 1 ครั้ง"
+        ),
+        models.Medication(
+            name="คอลชิซิน",
+            type="ยารักษาโรคเกาต์",
+            route="รับประทาน",
+            unit="0.6มก.",
+            instruction="รับประทานเมื่อมีอาการ",
+            frequency="ตามแพทย์สั่ง"
+        ),
+        models.Medication(
+            name="อัลลอพูรินอล",
+            type="ยารักษาโรคเกาต์",
+            route="รับประทาน",
+            unit="100มก.",
+            instruction="รับประทานหลังอาหาร",
+            frequency="วันละ 1 ครั้ง"
         )
     ]
+
     db.add_all(medications)
     db.commit()
 
