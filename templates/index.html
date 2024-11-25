@@ -9,7 +9,7 @@
             <h3 class="text-xl font-bold mb-2">รอรับยา (ครั้ง)</h3>
             <p class="text-3xl font-bold text-blue-600"
                hx-get="/api/dashboard/pending-count"
-               hx-trigger="load, every 30s">
+               hx-trigger="load, every 10s">
                 กำลังโหลด...
             </p>
         </div>
@@ -27,7 +27,7 @@
             <h3 class="text-xl font-bold mb-2">จำนวนผู้ป่วยที่กำลังรอรับยา (เตียง)</h3>
             <p class="text-3xl font-bold text-purple-600"
                hx-get="/api/dashboard/today-count"
-               hx-trigger="load, every 60s">
+               hx-trigger="load, every 10s">
                 กำลังโหลด...
             </p>
         </div>
@@ -41,7 +41,7 @@
         <div id="overdueSchedules"
              hx-get="/api/schedules/overdue"
              hx-swap="innerHTML"
-             hx-trigger="load, every 60s, scheduleCompleted from:body">
+             hx-trigger="load, every 10s, scheduleCompleted from:body">
             <p class="py-4 text-gray-500">กำลังโหลดรายการที่เลยกำหนด...</p>
         </div>
     </div>
@@ -67,7 +67,7 @@
         </div>
         <div id="upcomingSchedules"
              hx-get="/api/schedules/upcoming?duration=1"
-             hx-trigger="load, every 60s, scheduleCompleted from:body"
+             hx-trigger="load, every 10s, scheduleCompleted from:body"
              class="divide-y">
             <p class="py-4 text-gray-500">กำลังโหลดตารางเวลาที่จะมาถึง...</p>
         </div>
@@ -78,7 +78,7 @@
         <h2 class="text-2xl font-bold mb-4">กิจกรรมล่าสุด</h2>
         <div id="recentActivity"
              hx-get="/api/dashboard/recent-activity"
-             hx-trigger="load, every 60s"
+             hx-trigger="load, every 10s"
              class="divide-y">
             <p class="py-4 text-gray-500">กำลังโหลดกิจกรรมล่าสุด...</p>
         </div>
