@@ -2,6 +2,19 @@
 {% block title %}หน้าแรก{% endblock %}
 
 {% block content %}
+<audio id="notificationSound" src="/static/sound/mixkit-confirmation-tone-2867.wav" preload="auto"></audio>
+<script>
+let lastOverdueCount = 0;
+function checkAndPlaySound() {
+    const overdueItems = document.querySelectorAll('.overdue-item');
+    if (overdueItems.length > 0) {
+        document.getElementById('notificationSound').play();
+    }
+}
+// Start checking every 5 seconds
+setInterval(checkAndPlaySound, 5000);
+</script>
+
 <div class="container mx-auto px-4 py-8">
     <!-- Dashboard Summary -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -41,7 +54,7 @@
         <div id="overdueSchedules"
              hx-get="/api/schedules/overdue"
              hx-swap="innerHTML"
-             hx-trigger="load, every 10s, scheduleCompleted from:body">
+             hx-trigger="load, every 5s">
             <p class="py-4 text-gray-500">กำลังโหลดรายการที่เลยกำหนด...</p>
         </div>
     </div>
@@ -93,7 +106,7 @@
         
         <a href="/schedules" class="bg-green-500 text-white p-4 rounded-lg text-center hover:bg-green-600">
             <h3 class="font-bold">ตารางยารักษา</h3>
-            <p class="text-sm mt-1">ติดตามและจัดการยา</p>
+            <p class="text-sm mt-1">ติดตามและจัด���ารยา</p>
         </a>
         
         <a href="/medications/presets" class="bg-purple-500 text-white p-4 rounded-lg text-center hover:bg-purple-600">
@@ -113,4 +126,4 @@
 <!-- Report Modal -->
 <div id="reportModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 </div>
-{% endblock %}
+{% endblock %} 

@@ -187,7 +187,8 @@ async def get_overdue_schedules(
         {
             "request": request,
             "schedules": schedules,
-            "current_time": current_time
+            "current_time": current_time,
+            "has_overdue": len(schedules) > 0
         }
     )
 
