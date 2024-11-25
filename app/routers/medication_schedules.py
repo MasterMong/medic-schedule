@@ -40,12 +40,14 @@ def get_schedules_list(request: Request, db: Session = Depends(get_db)):
     schedules = db.query(models.MedicationSchedule)\
         .join(models.Patient)\
         .join(models.Medication)\
+        .filter(models.MedicationSchedule.is_completed == False)\
         .options(
             joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
             .joinedload(models.Bed.room)
             .joinedload(models.Room.ward),
             joinedload(models.MedicationSchedule.medication)
         )\
+        .order_by(models.MedicationSchedule.schedule_time)\
         .all()
     return templates.TemplateResponse(
         "schedules/_list.html",

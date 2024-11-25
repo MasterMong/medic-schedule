@@ -72,10 +72,14 @@ async def schedules_page(request: Request):
         schedules = db.query(models.MedicationSchedule)\
             .join(models.Patient)\
             .join(models.Medication)\
+            .filter(models.MedicationSchedule.is_completed == False)\
             .options(
-                joinedload(models.MedicationSchedule.patient),
+                joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
+                .joinedload(models.Bed.room)
+                .joinedload(models.Room.ward),
                 joinedload(models.MedicationSchedule.medication)
             )\
+            .order_by(models.MedicationSchedule.schedule_time)\
             .all()
         patients = db.query(models.Patient).all()
         medications = db.query(models.Medication).all()
@@ -85,7 +89,8 @@ async def schedules_page(request: Request):
                 "request": request, 
                 "schedules": schedules,
                 "patients": patients,
-                "medications": medications
+                "medications": medications,
+                "current_status": "pending"
             }
         )
     finally:
