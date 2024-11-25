@@ -195,7 +195,7 @@ async def get_today_count():
     try:
         today = datetime.now().date()
         count = db.query(models.MedicationSchedule).filter(
-            func.date(models.MedicationSchedule.schedule_time) == today
+            models.MedicationSchedule.is_completed == True
         ).count()
         return str(count)
     finally:

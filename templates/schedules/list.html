@@ -104,32 +104,15 @@
     </div>
 </div>
 
-<!-- Edit Schedule Modal -->
-<div id="editScheduleModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-    <!-- Similar to create modal but with pre-filled values -->
-</div>
-
 <!-- Notification sound for due medications -->
 <audio id="medicationAlert" src="/static/alert.mp3"></audio>
 
 <script>
-// Add this function to handle form submission
 function handleFormSubmission(event) {
     if (event.detail.successful) {
-        // Close the modal
         document.getElementById('createScheduleModal').classList.add('hidden');
-        // Reset the form
         document.getElementById('createScheduleForm').reset();
     }
-}
-
-function editSchedule(id) {
-    fetch(`/api/schedules/${id}`)
-        .then(response => response.json())
-        .then(schedule => {
-            // Populate and show edit modal
-            document.getElementById('editScheduleModal').classList.remove('hidden');
-        });
 }
 
 // Set default datetime when opening create modal
@@ -138,6 +121,5 @@ document.querySelector('[onclick*="createScheduleModal"]').addEventListener('cli
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     document.querySelector('input[name="schedule_time"]').value = now.toISOString().slice(0, 16);
 });
-
 </script>
-{% endblock %} 
+{% endblock %}

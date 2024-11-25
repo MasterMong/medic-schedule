@@ -34,21 +34,21 @@ document.body.addEventListener('scheduleCompleted', function() {
                 กำลังโหลด...
             </p>
         </div>
+
+        <div class="bg-white p-7 rounded-lg shadow">
+            <h2 class="text-xl font-bold mb-2">จำนวนครั้งที่ให้ยา (ครั้ง)</h3>
+            <p class="text-4xl font-bold text-purple-600"
+               hx-get="/api/dashboard/today-count"
+               hx-trigger="load, every 9s">
+                กำลังโหลด...
+            </p>
+        </div>
         
         <div class="bg-white p-6 rounded-lg shadow">
             <h3 class="text-xl font-bold mb-2">จำนวนเตียงที่รองรับ (เตียง)</h3>
             <p class="text-3xl font-bold text-green-600"
                hx-get="/api/dashboard/patients-count"
                hx-trigger="load">
-                กำลังโหลด...
-            </p>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">จำนวนผู้ป่วยที่กำลังรอรับยา (เตียง)</h3>
-            <p class="text-3xl font-bold text-purple-600"
-               hx-get="/api/dashboard/today-count"
-               hx-trigger="load, every 10s">
                 กำลังโหลด...
             </p>
         </div>
