@@ -121,19 +121,14 @@ async def get_upcoming_schedules(
     current_time = datetime.now()
     end_time = current_time + timedelta(hours=duration_hours)
     
-    # Include schedules that are overdue (before current time) and not completed
+    # Only include upcoming schedules within the time window
     schedules = db.query(models.MedicationSchedule)\
         .join(models.Patient)\
         .join(models.Medication)\
         .filter(
-            (
-                (models.MedicationSchedule.schedule_time >= current_time) &
-                (models.MedicationSchedule.schedule_time <= end_time)
-            ) |
-            (
-                (models.MedicationSchedule.schedule_time < current_time) &
-                (models.MedicationSchedule.is_completed == False)
-            )
+            models.MedicationSchedule.schedule_time >= current_time,
+            models.MedicationSchedule.schedule_time <= end_time,
+            models.MedicationSchedule.is_completed == False
         )\
         .options(
             joinedload(models.MedicationSchedule.patient)

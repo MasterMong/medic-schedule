@@ -1,8 +1,13 @@
 from datetime import datetime, date, timedelta
 from sqlalchemy.orm import Session
 from .. import models
+from ..database import Base, engine
 
 def seed_data(db: Session):
+    # Drop all tables and recreate them
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    
     # Clear existing data (optional)
     clear_tables(db)
     
@@ -101,7 +106,7 @@ def seed_data(db: Session):
             ward_type="อายุรกรรม"
         ),
         models.Ward(
-            ward_name="อายุรกรรมระบบประสาท",
+            ward_name="อายุรก���รมระบบประสาท",
             ward_type="ประสาทวิทยา"
         ),
         models.Ward(
@@ -412,24 +417,49 @@ def seed_data(db: Session):
 
     # Seed medication schedules
     current_time = datetime.now()
-    schedules = [
-        models.MedicationSchedule(
-            patient_id=patients[0].patient_id,
-            nurse_id=1,  # Assuming nurse with ID 1 exists
-            med_id=medications[0].med_id,
-            take_time_number=1,
-            schedule_time=current_time + timedelta(hours=6),
+    
+    # Regular scheduled medications
+    schedules = []
+    for i in range(10):
+        schedule = models.MedicationSchedule(
+            patient_id=patients[i % len(patients)].patient_id,
+            nurse_id=1,
+            med_id=medications[i % len(medications)].med_id,
+            take_time_number=i + 1,
+            schedule_time=current_time + timedelta(hours=i + 1),
             status="Scheduled"
-        ),
+        )
+        schedules.append(schedule)
+
+    # Add overdue schedules
+    overdue_schedules = [
         models.MedicationSchedule(
             patient_id=patients[0].patient_id,
             nurse_id=1,
             med_id=medications[0].med_id,
-            take_time_number=2,
-            schedule_time=current_time + timedelta(hours=12),
-            status="Scheduled"
+            take_time_number=1,
+            schedule_time=current_time - timedelta(hours=2),
+            status="Overdue"
+        ),
+        models.MedicationSchedule(
+            patient_id=patients[1].patient_id,
+            nurse_id=1,
+            med_id=medications[1].med_id,
+            take_time_number=1,
+            schedule_time=current_time - timedelta(hours=3),
+            status="Overdue"
+        ),
+        models.MedicationSchedule(
+            patient_id=patients[2].patient_id,
+            nurse_id=1,
+            med_id=medications[2].med_id,
+            take_time_number=1,
+            schedule_time=current_time - timedelta(hours=4),
+            status="Overdue"
         )
     ]
+    
+    schedules.extend(overdue_schedules)
     db.add_all(schedules)
     db.commit()
 

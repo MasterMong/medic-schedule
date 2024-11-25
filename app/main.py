@@ -223,3 +223,15 @@ async def get_recent_activity(request: Request):  # Add request parameter here
         )
     finally:
         db.close()
+
+@app.get("/seed")
+async def seed_route(request: Request):
+    db = SessionLocal()
+    try:
+        seed_data(db)
+        return templates.TemplateResponse(
+            "index.html", 
+            {"request": request, "message": "Data seeded successfully!"}
+        )
+    finally:
+        db.close()
