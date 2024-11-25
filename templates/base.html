@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Medication Tracking - {% block title %}{% endblock %}</title>
+    <title>การติดตามยาของโรงพยาบาล - {% block title %}{% endblock %}</title>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
     <nav class="bg-blue-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold hover:text-blue-200">Med Track</a>
+            <a href="/" class="text-2xl font-bold hover:text-blue-200">หน้าแรก</a>
             <div class="space-x-4">
-                <a href="/patients" class="hover:text-blue-200">Patients</a>
-                <a href="/medications" class="hover:text-blue-200">Medications</a>
-                <a href="/schedules" class="hover:text-blue-200">Schedules</a>
-                <a href="/medications/presets" class="hover:text-blue-200">Presets</a>
+                <a href="/patients" class="hover:text-blue-200">ผู้ป่วย</a>
+                <a href="/medications" class="hover:text-blue-200">ยา</a>
+                <a href="/schedules" class="hover:text-blue-200">ตารางให้ยา</a>
+                <!-- <a href="/medications/presets" class="hover:text-blue-200">ค่าที่ตั้งไว้ล่วงหน้า</a> -->
             </div>
         </div>
     </nav>
@@ -24,7 +24,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Notification Area -->
+    <!-- พื้นที่แจ้งเตือน -->
     <div id="notifications" 
          class="fixed bottom-4 right-4 z-50"
          hx-get="/api/notifications"

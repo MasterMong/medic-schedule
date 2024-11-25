@@ -7,33 +7,33 @@
                 {{ schedule.medication.name }} {% if schedule.note %}- {{ schedule.note }}{% endif %}
             </p>
             <p class="text-sm text-gray-500">
-                Location: Ward {{ schedule.patient.bed.room.ward.ward_name }}, 
-                Room {{ schedule.patient.bed.room.room_number }}, 
-                Bed {{ schedule.patient.bed.bed_number }}
+                สถานที่: วอร์ด {{ schedule.patient.bed.room.ward.ward_name }}, 
+                ห้อง {{ schedule.patient.bed.room.room_number }}, 
+                เตียง {{ schedule.patient.bed.bed_number }}
             </p>
             <p class="text-sm">
-                Scheduled: {{ schedule.schedule_time.strftime("%H:%M") }}
+                กำหนดเวลา: {{ schedule.schedule_time.strftime("%H:%M") }}
             </p>
             {% if schedule.is_completed %}
-            <p class="text-sm text-green-600">Status: Completed</p>
+            <p class="text-sm text-green-600">สถานะ: เสร็จสิ้น</p>
             {% endif %}
         </div>
         <div class="space-x-2">
             {% if not schedule.is_completed %}
                 <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm"
                         onclick="editSchedule('{{ schedule.schedule_id }}')">
-                    Edit
+                    แก้ไข
                 </button>
                 <button class="bg-green-500 text-white px-3 py-1 rounded text-sm"
                         hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
                         hx-target="#schedulesList">
-                    Complete
+                    รับยาแล้ว
                 </button>
                 <button class="bg-red-500 text-white px-3 py-1 rounded text-sm"
                         hx-delete="/api/schedules/{{ schedule.schedule_id }}"
-                        hx-confirm="Are you sure you want to delete this schedule?&#13;&#10;&#13;&#10;Patient: {{ schedule.patient.name }}&#13;&#10;Medication: {{ schedule.medication.name }}&#13;&#10;Time: {{ schedule.schedule_time.strftime('%H:%M') }}"
+                        hx-confirm="คุณแน่ใจหรือไม่ว่าต้องการลบตารางนี้?&#13;&#10;&#13;&#10;ผู้ป่วย: {{ schedule.patient.name }}&#13;&#10;ยา: {{ schedule.medication.name }}&#13;&#10;เวลา: {{ schedule.schedule_time.strftime('%H:%M') }}"
                         hx-target="#schedulesList">
-                    Delete
+                    ลบ
                 </button>
             {% endif %}
         </div>

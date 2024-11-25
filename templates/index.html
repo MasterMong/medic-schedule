@@ -1,34 +1,34 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}หน้าแรก{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
     <!-- Dashboard Summary -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">Pending Medications</h3>
+            <h3 class="text-xl font-bold mb-2">รอดำเนินการ</h3>
             <p class="text-3xl font-bold text-blue-600"
                hx-get="/api/dashboard/pending-count"
                hx-trigger="load, every 30s">
-                Loading...
+                กำลังโหลด...
             </p>
         </div>
         
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">Active Patients</h3>
+            <h3 class="text-xl font-bold mb-2">จำนวนผู้ป่วย</h3>
             <p class="text-3xl font-bold text-green-600"
                hx-get="/api/dashboard/patients-count"
                hx-trigger="load">
-                Loading...
+                กำลังโหลด...
             </p>
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">Today's Schedule</h3>
+            <h3 class="text-xl font-bold mb-2">ตารางรับยาวันนี้</h3>
             <p class="text-3xl font-bold text-purple-600"
                hx-get="/api/dashboard/today-count"
                hx-trigger="load, every 60s">
-                Loading...
+                กำลังโหลด...
             </p>
         </div>
     </div>
@@ -36,19 +36,19 @@
     <!-- Upcoming Schedules Section -->
     <div class="bg-white p-6 rounded-lg shadow mt-8">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold">Upcoming Medications</h2>
+            <h2 class="text-2xl font-bold">ผู้ป่วยที่ต้องรับยาเร็ว ๆ นี้</h2>
             <div class="flex items-center">
-                <label for="duration" class="mr-2">Show next:</label>
+                <label for="duration" class="mr-2">ช่วงเวลา:</label>
                 <select id="duration" name="duration" class="border p-2 rounded"
                         hx-get="/api/schedules/upcoming"
                         hx-target="#upcomingSchedules"
                         hx-trigger="change"
                         hx-include="[name='duration']">
-                    <option value="1">1 hour</option>
-                    <option value="3">3 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="12">12 hours</option>
-                    <option value="24">24 hours</option>
+                    <option value="1">1 ชั่วโมง</option>
+                    <option value="3">3 ชั่วโมง</option>
+                    <option value="6">6 ชั่วโมง</option>
+                    <option value="12">12 ชั่วโมง</option>
+                    <option value="24">24 ชั่วโมง</option>
                 </select>
             </div>
         </div>
@@ -56,43 +56,43 @@
              hx-get="/api/schedules/upcoming?duration=1"
              hx-trigger="load"
              class="divide-y">
-            <p class="py-4 text-gray-500">Loading upcoming schedules...</p>
+            <p class="py-4 text-gray-500">กำลังโหลดตารางเวลาที่จะมาถึง...</p>
         </div>
     </div>
 
     <!-- Recent Activity -->
     <div class="bg-white p-6 rounded-lg shadow mt-8">
-        <h2 class="text-2xl font-bold mb-4">Recent Activity</h2>
+        <h2 class="text-2xl font-bold mb-4">กิจกรรมล่าสุด</h2>
         <div id="recentActivity"
              hx-get="/api/dashboard/recent-activity"
              hx-trigger="load, every 60s"
              class="divide-y">
-            <p class="py-4 text-gray-500">Loading recent activities...</p>
+            <p class="py-4 text-gray-500">กำลังโหลดกิจกรรมล่าสุด...</p>
         </div>
     </div>
 
     <!-- Quick Actions -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 hidden">
         <a href="/patients" class="bg-blue-500 text-white p-4 rounded-lg text-center hover:bg-blue-600">
-            <h3 class="font-bold">Manage Patients</h3>
-            <p class="text-sm mt-1">View and update patient records</p>
+            <h3 class="font-bold">จัดการผู้ป่วย</h3>
+            <p class="text-sm mt-1">ดูและอัปเดตข้อมูลผู้ป่วย</p>
         </a>
         
         <a href="/schedules" class="bg-green-500 text-white p-4 rounded-lg text-center hover:bg-green-600">
-            <h3 class="font-bold">Medication Schedules</h3>
-            <p class="text-sm mt-1">Track and manage medications</p>
+            <h3 class="font-bold">ตารางยารักษา</h3>
+            <p class="text-sm mt-1">ติดตามและจัดการยา</p>
         </a>
         
         <a href="/medications/presets" class="bg-purple-500 text-white p-4 rounded-lg text-center hover:bg-purple-600">
-            <h3 class="font-bold">Medication Presets</h3>
-            <p class="text-sm mt-1">Configure medication templates</p>
+            <h3 class="font-bold">การตั้งค่ายาล่วงหน้า</h3>
+            <p class="text-sm mt-1">กำหนดแม่แบบยา</p>
         </a>
         
         <button class="bg-yellow-500 text-white p-4 rounded-lg text-center hover:bg-yellow-600"
                 hx-get="/api/reports/generate"
                 hx-target="#reportModal">
-            <h3 class="font-bold">Generate Reports</h3>
-            <p class="text-sm mt-1">View medication statistics</p>
+            <h3 class="font-bold">สร้างรายงาน</h3>
+            <p class="text-sm mt-1">ดูสถิติยา</p>
         </button>
     </div>
 </div>
