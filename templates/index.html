@@ -15,7 +15,7 @@
         </div>
         
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">จำนวนเตียง (เตียง)</h3>
+            <h3 class="text-xl font-bold mb-2">จำนวนเตียงที่รองรับ (เตียง)</h3>
             <p class="text-3xl font-bold text-green-600"
                hx-get="/api/dashboard/patients-count"
                hx-trigger="load">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">จำนวนผู้ป่วย (คน)</h3>
+            <h3 class="text-xl font-bold mb-2">จำนวนผู้ป่วยที่กำลังรอรับยา (เตียง)</h3>
             <p class="text-3xl font-bold text-purple-600"
                hx-get="/api/dashboard/today-count"
                hx-trigger="load, every 60s">
@@ -37,6 +37,9 @@
     <div class="bg-white p-6 rounded-lg shadow mt-8">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-bold">ผู้ป่วยที่ต้องรับยาเร็ว ๆ นี้</h2>
+            <div>
+                ระบบจะแจ้งเตือนเมื่อใกล้ถึงเวลาให้ยา
+            </div>
             <div class="flex items-center">
                 <label for="duration" class="mr-2">ช่วงเวลา:</label>
                 <select id="duration" name="duration" class="border p-2 rounded"
