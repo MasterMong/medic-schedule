@@ -27,7 +27,7 @@
     <div id="schedulesList" 
          class="divide-y"
          hx-get="/api/schedules/list?status=pending"
-         hx-trigger="every 60s, load">
+         hx-trigger="every 60s, load, scheduleUpdated from:body">
         {% include "schedules/_list.html" %}
     </div>
 </div>
@@ -131,5 +131,13 @@ function editSchedule(id) {
             document.getElementById('editScheduleModal').classList.remove('hidden');
         });
 }
+
+// Set default datetime when opening create modal
+document.querySelector('[onclick*="createScheduleModal"]').addEventListener('click', function() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.querySelector('input[name="schedule_time"]').value = now.toISOString().slice(0, 16);
+});
+
 </script>
-{% endblock %}
+{% endblock %} 

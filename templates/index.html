@@ -33,6 +33,18 @@
         </div>
     </div>
 
+    <!-- Overdue Schedules Section -->
+    <div class="bg-white p-6 rounded-lg shadow mt-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-red-600">รายการที่เลยกำหนด</h2>
+        </div>
+        <div id="overdueSchedules"
+             hx-get="/api/schedules/overdue"
+             hx-trigger="load, every 60s">
+            <p class="py-4 text-gray-500">กำลังโหลดรายการที่เลยกำหนด...</p>
+        </div>
+    </div>
+
     <!-- Upcoming Schedules Section -->
     <div class="bg-white p-6 rounded-lg shadow mt-8">
         <div class="flex justify-between items-center mb-4">
@@ -60,18 +72,6 @@
              hx-trigger="load, every 60s"
              class="divide-y">
             <p class="py-4 text-gray-500">กำลังโหลดตารางเวลาที่จะมาถึง...</p>
-        </div>
-    </div>
-
-    <!-- Overdue Schedules Section -->
-    <div class="bg-white p-6 rounded-lg shadow mt-8">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-red-600">รายการที่เลยกำหนด</h2>
-        </div>
-        <div id="overdueSchedules"
-             hx-get="/api/schedules/overdue"
-             hx-trigger="load, every 60s">
-            <p class="py-4 text-gray-500">กำลังโหลดรายการที่เลยกำหนด...</p>
         </div>
     </div>
 
