@@ -11,11 +11,14 @@
                 Add Schedule
             </button>
             <select class="border p-2 rounded"
+                    name="status"
                     hx-get="/api/schedules/filter"
-                    hx-target="#schedulesList">
-                <option value="pending">Pending</option>
+                    hx-trigger="change"
+                    hx-target="#schedulesList"
+                    hx-params="status">
+                <option value="all">All Schedules</option>
+                <option value="pending" selected>Pending</option>
                 <option value="completed">Completed</option>
-                <option value="all">All</option>
             </select>
         </div>
     </div>

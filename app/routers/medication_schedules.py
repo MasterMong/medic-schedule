@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Form
+from fastapi import APIRouter, Depends, HTTPException, Request, Form, Query
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session, joinedload
 from typing import List
@@ -9,6 +9,48 @@ from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
+
+@router.get("/filter")  # Move this before the /{schedule_id} route
+async def filter_schedules(
+    request: Request,
+    status: str = Query(default="pending"),  # Add default value
+    db: Session = Depends(get_db)
+):
+    query = db.query(models.MedicationSchedule)\
+        .join(models.Patient)\
+        .join(models.Medication)\
+        .options(
+            joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
+            .joinedload(models.Bed.room)
+            .joinedload(models.Room.ward),
+            joinedload(models.MedicationSchedule.medication)
+        )
+    
+    if status != "all":
+        query = query.filter(models.MedicationSchedule.is_completed == (status == "completed"))
+    
+    schedules = query.order_by(models.MedicationSchedule.schedule_time).all()
+    return templates.TemplateResponse(
+        "schedules/_list.html",
+        {"request": request, "schedules": schedules}
+    )
+
+@router.get("/list", response_class=HTMLResponse)
+def get_schedules_list(request: Request, db: Session = Depends(get_db)):
+    schedules = db.query(models.MedicationSchedule)\
+        .join(models.Patient)\
+        .join(models.Medication)\
+        .options(
+            joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
+            .joinedload(models.Bed.room)
+            .joinedload(models.Room.ward),
+            joinedload(models.MedicationSchedule.medication)
+        )\
+        .all()
+    return templates.TemplateResponse(
+        "schedules/_list.html",
+        {"request": request, "schedules": schedules}
+    )
 
 @router.get("/", response_model=List[schemas.MedicationSchedule])
 def get_medication_schedules(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -117,46 +159,6 @@ def complete_schedule(
         )\
         .all()
     
-    return templates.TemplateResponse(
-        "schedules/_list.html",
-        {"request": request, "schedules": schedules}
-    )
-
-@router.get("/filter")
-def filter_schedules(request: Request, status: str, db: Session = Depends(get_db)):
-    query = db.query(models.MedicationSchedule)\
-        .join(models.Patient)\
-        .join(models.Medication)\
-        .options(
-            joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
-            .joinedload(models.Bed.room)
-            .joinedload(models.Room.ward),
-            joinedload(models.MedicationSchedule.medication)
-        )
-    
-    if status == "pending":
-        query = query.filter(models.MedicationSchedule.is_completed == False)
-    elif status == "completed":
-        query = query.filter(models.MedicationSchedule.is_completed == True)
-    
-    schedules = query.all()
-    return templates.TemplateResponse(
-        "schedules/_list.html",
-        {"request": request, "schedules": schedules}
-    )
-
-@router.get("/list", response_class=HTMLResponse)
-def get_schedules_list(request: Request, db: Session = Depends(get_db)):
-    schedules = db.query(models.MedicationSchedule)\
-        .join(models.Patient)\
-        .join(models.Medication)\
-        .options(
-            joinedload(models.MedicationSchedule.patient).joinedload(models.Patient.bed)
-            .joinedload(models.Bed.room)
-            .joinedload(models.Room.ward),
-            joinedload(models.MedicationSchedule.medication)
-        )\
-        .all()
     return templates.TemplateResponse(
         "schedules/_list.html",
         {"request": request, "schedules": schedules}
