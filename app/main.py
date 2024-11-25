@@ -166,14 +166,6 @@ def get_medications_from_db():
 def read_root():
     return {"message": "Welcome to Hospital Medication Tracking System API"}
 
-@app.post("/seed-data")
-def seed_database():
-    db = SessionLocal()
-    try:
-        seed_data(db)
-        return {"message": "Database seeded successfully"}
-    finally:
-        db.close()
 
 # Dashboard API endpoints
 @app.get("/api/dashboard/pending-count")
