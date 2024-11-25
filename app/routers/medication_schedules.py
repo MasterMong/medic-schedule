@@ -112,6 +112,42 @@ async def create_medication_schedule(
         {"request": request, "schedules": schedules}
     )
 
+@router.get("/upcoming", response_class=HTMLResponse)
+async def get_upcoming_schedules(
+    request: Request,
+    duration_hours: int = Query(1, alias="duration"),
+    db: Session = Depends(get_db)
+):
+    current_time = datetime.now()
+    end_time = current_time + timedelta(hours=duration_hours)
+    
+    schedules = db.query(models.MedicationSchedule)\
+        .join(models.Patient)\
+        .join(models.Medication)\
+        .filter(
+            models.MedicationSchedule.schedule_time >= current_time,
+            models.MedicationSchedule.schedule_time <= end_time,
+            models.MedicationSchedule.is_completed == False
+        )\
+        .options(
+            joinedload(models.MedicationSchedule.patient)
+            .joinedload(models.Patient.bed)
+            .joinedload(models.Bed.room)
+            .joinedload(models.Room.ward),
+            joinedload(models.MedicationSchedule.medication)
+        )\
+        .order_by(models.MedicationSchedule.schedule_time)\
+        .all()
+        
+    return templates.TemplateResponse(
+        "components/upcoming_schedules.html",
+        {
+            "request": request,
+            "schedules": schedules,
+            "current_time": current_time
+        }
+    )
+
 @router.get("/{schedule_id}", response_model=schemas.MedicationSchedule)
 def get_medication_schedule(schedule_id: int, db: Session = Depends(get_db)):
     schedule = db.query(models.MedicationSchedule).filter(models.MedicationSchedule.schedule_id == schedule_id).first()

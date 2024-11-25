@@ -1,0 +1,36 @@
+{% if schedules %}
+    <ul class="divide-y">
+    {% for schedule in schedules %}
+        <li class="py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="font-bold">{{ schedule.patient.name }}</p>
+                    <p class="text-sm text-gray-500">
+                        {{ schedule.medication.name }} - 
+                        {{ schedule.schedule_time.strftime('%Y-%m-%d %H:%M') }}
+                    </p>
+                </div>
+                <div>
+                    {% set time_left = schedule.schedule_time - current_time %}
+                    {% set total_seconds = time_left.total_seconds() %}
+                    <span class="px-2 py-1 bg-blue-500 text-white rounded">
+                        {% if total_seconds > 0 %}
+                            {% set hours = total_seconds // 3600 %}
+                            {% set minutes = (total_seconds % 3600) // 60 %}
+                            {% if hours > 0 %}
+                                {{ hours|int }}h {{ minutes|int }}m
+                            {% else %}
+                                {{ minutes|int }}m
+                            {% endif %}
+                        {% else %}
+                            Due now
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p class="py-4 text-gray-500">No upcoming schedules.</p>
+{% endif %}
