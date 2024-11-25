@@ -1,36 +1,64 @@
 {% if schedules %}
-    <ul class="divide-y">
+<div class="divide-y">
     {% for schedule in schedules %}
-        <li class="py-4">
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="font-bold">{{ schedule.patient.name }}</p>
-                    <p class="text-sm text-gray-500">
-                        {{ schedule.medication.name }} - 
-                        {{ schedule.schedule_time.strftime('%Y-%m-%d %H:%M') }}
-                    </p>
+    <div class="py-4 flex items-center justify-between hover:bg-gray-50">
+        <div class="flex-1 space-y-2">
+            <div class="flex items-center space-x-2">
+                <div class="font-semibold text-blue-600">
+                    {{ schedule.patient.name }}
                 </div>
-                <div>
-                    {% set time_left = schedule.schedule_time - current_time %}
-                    {% set total_seconds = time_left.total_seconds() %}
-                    <span class="px-2 py-1 bg-blue-500 text-white rounded">
-                        {% if total_seconds > 0 %}
-                            {% set hours = total_seconds // 3600 %}
-                            {% set minutes = (total_seconds % 3600) // 60 %}
-                            {% if hours > 0 %}
-                                {{ hours|int }}h {{ minutes|int }}m
-                            {% else %}
-                                {{ minutes|int }}m
-                            {% endif %}
-                        {% else %}
-                            ถึงเวลารับยา
-                        {% endif %}
-                    </span>
+                <div class="text-sm bg-gray-100 px-2 py-0.5 rounded">
+                    เตียง {{ schedule.patient.bed.bed_number }} (ห้อง {{ schedule.patient.bed.room.room_number }})
+                </div>
+                {% if schedule.patient.age %}
+                <div class="text-sm text-gray-500">
+                    อายุ {{ schedule.patient.age }} ปี
+                </div>
+                {% endif %}
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm">
+                    <span class="font-medium">ยา:</span> {{ schedule.medication.name }}
+                </div>
+                <div class="text-sm">
+                    <span class="font-medium">ขนาด:</span> {{ schedule.medication.dose }} {{ schedule.medication.unit }}
+                </div>
+                <div class="text-sm">
+                    <span class="font-medium">วิธีให้ยา:</span> {{ schedule.medication.route }}
                 </div>
             </div>
-        </li>
+            <div class="text-sm text-gray-600">
+                <span class="font-medium">คำแนะนำ:</span> {{ schedule.medication.instruction }}
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="text-xs text-blue-500">
+                    กำหนดเวลา {{ schedule.schedule_time.strftime('%H:%M') }} น.
+                </div>
+                {% set time_left = schedule.schedule_time - current_time %}
+                {% set total_seconds = time_left.total_seconds() %}
+                {% if total_seconds > 0 %}
+                <div class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                    อีก {{ (total_seconds / 3600)|round|int }} ชั่วโมง
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="ml-4">
+            <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                    hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
+                    hx-confirm="ยืนยันการให้ยาแก่ผู้ป่วย {{ schedule.patient.name }} (เตียง {{ schedule.patient.bed.bed_number }})
+
+ยา: {{ schedule.medication.name }} {{ schedule.medication.dose }} {{ schedule.medication.unit }}
+วิธีให้ยา: {{ schedule.medication.route }}
+
+คลิก OK เพื่อยืนยันการให้ยา"
+                    hx-target="#upcomingSchedules">
+                ให้ยาแล้ว
+            </button>
+        </div>
+    </div>
     {% endfor %}
-    </ul>
+</div>
 {% else %}
-    <p class="py-4 text-gray-500">ไม่มีรายการที่จะมาถึง</p>
+<div class="py-4 text-gray-500">ไม่มีรายการที่จะมาถึง</div>
 {% endif %}

@@ -420,7 +420,7 @@ def seed_data(db: Session):
     
     # Regular scheduled medications
     schedules = []
-    for i in range(1):
+    for i in range(10):
         schedule = models.MedicationSchedule(
             patient_id=patients[i % len(patients)].patient_id,
             nurse_id=1,

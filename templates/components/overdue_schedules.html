@@ -1,23 +1,57 @@
 <div class="divide-y">
     {% for schedule in schedules %}
     <div class="py-4 flex items-center justify-between hover:bg-gray-50">
-        <div class="flex-1">
-            <div class="font-semibold text-red-600">
-                {{ schedule.patient.name }} ({{ schedule.patient.bed.bed_number }})
+        <div class="flex-1 space-y-2">
+            <div class="flex items-center space-x-2">
+                <div class="font-semibold text-red-600">
+                    {{ schedule.patient.name }}
+                </div>
+                <div class="text-sm bg-gray-100 px-2 py-0.5 rounded">
+                    เตียง {{ schedule.patient.bed.bed_number }} (ห้อง {{ schedule.patient.bed.room.room_number }})
+                </div>
+                {% if schedule.patient.age %}
+                <div class="text-sm text-gray-500">
+                    อายุ {{ schedule.patient.age }} ปี
+                </div>
+                {% endif %}
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm">
+                    <span class="font-medium">ยา:</span> {{ schedule.medication.name }}
+                </div>
+                <div class="text-sm">
+                    <span class="font-medium">ขนาด:</span> {{ schedule.medication.dose }} {{ schedule.medication.unit }}
+                </div>
+                <div class="text-sm">
+                    <span class="font-medium">วิธีให้ยา:</span> {{ schedule.medication.route }}
+                </div>
             </div>
             <div class="text-sm text-gray-600">
-                {{ schedule.medication.name }} - {{ schedule.medication.instruction }}
+                <span class="font-medium">คำแนะนำ:</span> {{ schedule.medication.instruction }}
             </div>
-            <div class="text-xs text-red-500">
-                ตั้งแต่เวลา {{ schedule.schedule_time.strftime('%H:%M') }}
-                ({{ ((current_time - schedule.schedule_time).total_seconds() / 3600)|round|int }} hr)
+            <div class="flex items-center space-x-2">
+                <div class="text-xs text-red-500">
+                    กำหนดเวลา {{ schedule.schedule_time.strftime('%H:%M') }} น.
+                </div>
+                <div class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
+                    เลยเวลามา {{ ((current_time - schedule.schedule_time).total_seconds() / 3600)|round|int }} ชั่วโมง
+                </div>
             </div>
         </div>
-        <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
-                hx-target="#overdueSchedules">
-            ให้ยาแล้ว
-        </button>
+        <div class="ml-4">
+            <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                    hx-post="/api/schedules/{{ schedule.schedule_id }}/complete"
+                    hx-confirm="⚠️ รายการยาเลยเวลา {{ ((current_time - schedule.schedule_time).total_seconds() / 3600)|round|int }} ชั่วโมง
+
+ผู้ป่วย: {{ schedule.patient.name }} (เตียง {{ schedule.patient.bed.bed_number }})
+ยา: {{ schedule.medication.name }} {{ schedule.medication.dose }} {{ schedule.medication.unit }}
+วิธีให้ยา: {{ schedule.medication.route }}
+
+คลิก OK เพื่อยืนยันการให้ยา"
+                    hx-target="#overdueSchedules">
+                ให้ยาแล้ว
+            </button>
+        </div>
     </div>
     {% else %}
     <div class="py-4 text-gray-500">ไม่มีรายการที่เลยกำหนด</div>

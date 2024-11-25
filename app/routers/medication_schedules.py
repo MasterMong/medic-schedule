@@ -133,7 +133,6 @@ async def get_upcoming_schedules(
     current_time = datetime.now()
     end_time = current_time + timedelta(hours=duration_hours)
     
-    # Only include upcoming schedules within the time window
     schedules = db.query(models.MedicationSchedule)\
         .join(models.Patient)\
         .join(models.Medication)\
@@ -145,8 +144,7 @@ async def get_upcoming_schedules(
         .options(
             joinedload(models.MedicationSchedule.patient)
             .joinedload(models.Patient.bed)
-            .joinedload(models.Bed.room)
-            .joinedload(models.Room.ward),
+            .joinedload(models.Bed.room),
             joinedload(models.MedicationSchedule.medication)
         )\
         .order_by(models.MedicationSchedule.schedule_time)\
@@ -177,7 +175,8 @@ async def get_overdue_schedules(
         )\
         .options(
             joinedload(models.MedicationSchedule.patient)
-            .joinedload(models.Patient.bed),
+            .joinedload(models.Patient.bed)
+            .joinedload(models.Bed.room),
             joinedload(models.MedicationSchedule.medication)
         )\
         .order_by(models.MedicationSchedule.schedule_time)\
@@ -224,6 +223,7 @@ def delete_medication_schedule(schedule_id: int, db: Session = Depends(get_db)):
 
 @router.post("/{schedule_id}/complete")
 def complete_schedule(
+    request: Request,
     schedule_id: int, 
     db: Session = Depends(get_db)
 ):
@@ -234,10 +234,7 @@ def complete_schedule(
             .first()
         
         if not schedule:
-            return JSONResponse(
-                status_code=404,
-                content={"success": False, "message": "Schedule not found"}
-            )
+            raise HTTPException(status_code=404, detail="Schedule not found")
         
         # Update schedule
         schedule.is_completed = True
@@ -255,18 +252,35 @@ def complete_schedule(
         db.add(history)
         db.commit()
         
-        return JSONResponse(
-            content={
-                "success": True,
-                "message": "Schedule completed successfully"
+        # Get updated upcoming schedules
+        current_time = datetime.now()
+        upcoming_schedules = db.query(models.MedicationSchedule)\
+            .join(models.Patient)\
+            .join(models.Medication)\
+            .filter(
+                models.MedicationSchedule.schedule_time >= current_time,
+                models.MedicationSchedule.schedule_time <= current_time + timedelta(hours=1),
+                models.MedicationSchedule.is_completed == False
+            )\
+            .options(
+                joinedload(models.MedicationSchedule.patient)
+                .joinedload(models.Patient.bed)
+                .joinedload(models.Bed.room),
+                joinedload(models.MedicationSchedule.medication)
+            )\
+            .order_by(models.MedicationSchedule.schedule_time)\
+            .all()
+            
+        # Return updated list template
+        return templates.TemplateResponse(
+            "components/upcoming_schedules.html",
+            {
+                "request": request,
+                "schedules": upcoming_schedules,
+                "current_time": current_time
             }
         )
+        
     except Exception as e:
         db.rollback()
-        return JSONResponse(
-            status_code=500,
-            content={
-                "success": False,
-                "message": str(e)
-            }
-        )
+        raise HTTPException(status_code=500, detail=str(e))
