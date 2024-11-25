@@ -389,27 +389,24 @@ def seed_data(db: Session):
     db.add_all(preset_meds)
     db.commit()
 
-    # Seed some test patients
-    patients = [
-        models.Patient(
-            bed_id=1,  # Assuming bed with ID 1 exists
-            hn="HN001",
-            name="John Doe",
+    # Seed patients - one per bed with ward and room info
+    beds = db.query(models.Bed).join(models.Room).join(models.Ward).all()
+    patients = []
+    for bed in beds:
+        ward_name = bed.room.ward.ward_name
+        room_number = bed.room.room_number
+        bed_number = bed.bed_number
+        
+        patient = models.Patient(
+            bed_id=bed.bed_id,
+            hn=f"HN{str(bed.bed_id).zfill(6)}", 
+            name=f"ผู้ป่วย {ward_name} ห้อง {room_number} เตียง {bed_number}",
             dob=date(1990, 1, 1),
             admission_date=date.today(),
-            diagnosis="Fever",
-            status="Admitted"
-        ),
-        models.Patient(
-            bed_id=2,  # Assuming bed with ID 2 exists
-            hn="HN002",
-            name="Jane Smith",
-            dob=date(1985, 5, 15),
-            admission_date=date.today(),
-            diagnosis="Post-surgery recovery",
+            diagnosis="Observation",
             status="Admitted"
         )
-    ]
+        patients.append(patient)
     db.add_all(patients)
     db.commit()
 
